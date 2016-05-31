@@ -12,6 +12,7 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
+        'css/site.css',
         'adminlte/plugins/jvectormap/jquery-jvectormap-1.2.2.css',
         'adminlte/dist/css/AdminLTE.min.css',
         'adminlte/dist/css/skins/_all-skins.min.css',

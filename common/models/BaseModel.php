@@ -11,7 +11,7 @@ use yii\db\ActiveRecord;
  */
 class BaseModel extends ActiveRecord
 {
-    const STATUS_DELETED  = 0;
-    const STATUS_INACTIVE = 1;
-    const STATUS_ACTIVE   = 2;
+    const STATUS_DELETED  = -1;
+    const STATUS_INACTIVE = 0;
+    const STATUS_ACTIVE   = 1;
 }
