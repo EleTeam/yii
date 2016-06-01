@@ -18,7 +18,7 @@ class ProductSearch extends Product
     public function rules()
     {
         return [
-            [['id', 'image', 'featured_image', 'image_small', 'name', 'del_flag', 'create_date', 'create_by', 'update_date', 'update_by', 'featured_position', 'app_featured_home', 'app_featured_image', 'short_description', 'meta_keywords', 'meta_description', 'is_audit', 'remarks', 'featured', 'description', 'category_id', 'image_medium', 'image_large', 'app_featured_topic', 'app_long_image1', 'app_long_image2', 'app_long_image3', 'type', 'app_long_image4', 'app_long_image5', 'status'], 'safe'],
+            [['id', 'image', 'featured_image', 'image_small', 'name', 'del_flag', 'created_at', 'create_by', 'updated_at', 'updated_at', 'featured_position', 'app_featured_home', 'app_featured_image', 'short_description', 'meta_keywords', 'meta_description', 'is_audit', 'remarks', 'featured', 'description', 'category_id', 'image_medium', 'image_large', 'app_featured_topic', 'app_long_image1', 'app_long_image2', 'app_long_image3', 'type', 'app_long_image4', 'app_long_image5', 'status'], 'safe'],
             [['sort', 'featured_position_sort', 'app_featured_home_sort', 'app_featured_topic_sort'], 'integer'],
             [['price', 'featured_price'], 'number'],
         ];
@@ -61,8 +61,8 @@ class ProductSearch extends Product
         // grid filtering conditions
         $query->andFilterWhere([
             'sort' => $this->sort,
-            'create_date' => $this->create_date,
-            'update_date' => $this->update_date,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
             'price' => $this->price,
             'featured_price' => $this->featured_price,
             'featured_position_sort' => $this->featured_position_sort,
@@ -76,8 +76,8 @@ class ProductSearch extends Product
             ->andFilterWhere(['like', 'image_small', $this->image_small])
             ->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'del_flag', $this->del_flag])
-            ->andFilterWhere(['like', 'create_by', $this->create_by])
-            ->andFilterWhere(['like', 'update_by', $this->update_by])
+            ->andFilterWhere(['like', 'created_at', $this->create_by])
+            ->andFilterWhere(['like', 'updated_at', $this->update_by])
             ->andFilterWhere(['like', 'featured_position', $this->featured_position])
             ->andFilterWhere(['like', 'app_featured_home', $this->app_featured_home])
             ->andFilterWhere(['like', 'app_featured_image', $this->app_featured_image])

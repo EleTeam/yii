@@ -14,9 +14,9 @@ use Yii;
  * @property string $name
  * @property integer $sort
  * @property string $del_flag
- * @property string $create_date
+ * @property string $created_at
  * @property string $create_by
- * @property string $update_date
+ * @property string $updated_at
  * @property string $update_by
  * @property string $price
  * @property string $featured_price
@@ -82,13 +82,13 @@ class Product extends \yii\db\ActiveRecord
             'id' => 'ID',
             'image' => 'Image',
             'featured_image' => 'Featured Image',
-            'image_small' => 'Image Small',
+            'image_small' => '小图',
             'name' => 'Name',
             'sort' => 'Sort',
             'del_flag' => 'Del Flag',
-            'create_date' => 'Create Date',
+            'created_at' => 'Create Date',
             'create_by' => 'Create By',
-            'update_date' => 'Update Date',
+            'updated_at' => 'Update Date',
             'update_by' => 'Update By',
             'price' => 'Price',
             'featured_price' => 'Featured Price',
@@ -115,7 +115,7 @@ class Product extends \yii\db\ActiveRecord
             'type' => 'Type',
             'app_long_image4' => 'App Long Image4',
             'app_long_image5' => 'App Long Image5',
-            'status' => 'çŠ¶æ€ï¼Œ0:éšè—ï¼Œ1:æ˜¾ç¤º',
+            'status' => '状态',
         ];
     }
 

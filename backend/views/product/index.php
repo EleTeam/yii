@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ListView;
+use yii\grid\GridView;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\ProductSearch */
@@ -13,16 +13,63 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="product-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
         <?= Html::a(Yii::t('app', 'Create Product'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-<?php Pjax::begin(); ?>    <?= ListView::widget([
+
+<?php Pjax::begin(); ?>
+    <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'itemOptions' => ['class' => 'item'],
-        'itemView' => function ($model, $key, $index, $widget) {
-            return Html::a(Html::encode($model->name), ['view', 'id' => $model->id]);
-        },
-    ]) ?>
-<?php Pjax::end(); ?></div>
+        'filterModel' => $searchModel,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+            'id',
+            [
+                'attribute'=>'pic',
+                'format' => ['image',['width'=>'30','height'=>'30',]],
+                'value' => function($dataProvider){
+                    return $dataProvider->image_small;
+                }
+
+            ],
+            'name',
+            // 'sort',
+            // 'del_flag',
+            // 'created_at',
+            // 'create_by',
+            // 'updated_at',
+            // 'update_by',
+            // 'price',
+            // 'featured_price',
+            // 'featured_position',
+            // 'featured_position_sort',
+            // 'app_featured_home',
+            // 'app_featured_home_sort',
+            // 'app_featured_image',
+            // 'short_description',
+            // 'meta_keywords',
+            // 'meta_description',
+            // 'is_audit',
+            // 'remarks',
+            // 'featured',
+            // 'description:ntext',
+            // 'category_id',
+            // 'image_medium',
+            // 'image_large',
+            // 'app_featured_topic',
+            // 'app_featured_topic_sort',
+            // 'app_long_image1',
+            // 'app_long_image2',
+            // 'app_long_image3',
+            // 'type',
+            // 'app_long_image4',
+            // 'app_long_image5',
+            // 'status',
+
+            ['class' => 'yii\grid\ActionColumn'],
+        ],
+    ]); ?>
+<?php Pjax::end(); ?>
+</div>

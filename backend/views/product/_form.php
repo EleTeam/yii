@@ -26,11 +26,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'del_flag')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'create_date')->textInput() ?>
-
     <?= $form->field($model, 'create_by')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'update_date')->textInput() ?>
 
     <?= $form->field($model, 'update_by')->textInput(['maxlength' => true]) ?>
 
