@@ -19,6 +19,7 @@ return [
     'Service Data Table' => '服务器数据',
 
     'Product' => '商品',
+    'Small Image' => '小图',
     'Category' => '分类',
 
     'User' => '用户',

@@ -63,7 +63,7 @@ class Product extends \yii\db\ActiveRecord
         return [
             [['id'], 'required'],
             [['sort', 'featured_position_sort', 'app_featured_home_sort', 'app_featured_topic_sort'], 'integer'],
-            [['create_date', 'update_date'], 'safe'],
+            [['created_at', 'updated_at'], 'safe'],
             [['price', 'featured_price'], 'number'],
             [['description'], 'string'],
             [['id', 'create_by', 'update_by', 'category_id'], 'string', 'max' => 64],

@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use yii\helpers\Url;
+
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\ProductSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -27,10 +29,10 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
             'id',
             [
-                'attribute'=>'pic',
+                'attribute' => Yii::t('app', 'Small Image'),
                 'format' => ['image',['width'=>'30','height'=>'30',]],
                 'value' => function($dataProvider){
-                    return $dataProvider->image_small;
+                    return Yii::$app->params['imghost'] . $dataProvider->image_small;
                 }
 
             ],
