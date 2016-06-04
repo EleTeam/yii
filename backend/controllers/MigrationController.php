@@ -53,4 +53,9 @@ class MigrationController extends BaseController
         echo '移植产品图片结束';
         exit;
     }
+
+    public function ActionProductId()
+    {
+        //category, product, product_attr
+    }
 }

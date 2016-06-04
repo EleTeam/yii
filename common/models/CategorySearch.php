@@ -18,7 +18,7 @@ class CategorySearch extends Category
     public function rules()
     {
         return [
-            [['id', 'featured', 'image', 'featured_image', 'image_small', 'name', 'parent_id', 'del_flag', 'create_date', 'create_by', 'update_date', 'update_by', 'short_description', 'app_featured_home', 'parent_ids', 'remarks', 'is_audit', 'meta_keywords', 'meta_description', 'href', 'href_target', 'image_medium', 'image_large'], 'safe'],
+            [['id', 'featured', 'image', 'featured_image', 'image_small', 'name', 'parent_id', 'del_flag', 'created_at', 'created_by', 'updated_at', 'updated_by', 'short_description', 'app_featured_home', 'parent_ids', 'remarks', 'is_audit', 'meta_keywords', 'meta_description', 'href', 'href_target', 'image_medium', 'image_large'], 'safe'],
             [['sort', 'app_featured_home_sort'], 'integer'],
         ];
     }
@@ -60,8 +60,8 @@ class CategorySearch extends Category
         // grid filtering conditions
         $query->andFilterWhere([
             'sort' => $this->sort,
-            'create_date' => $this->create_date,
-            'update_date' => $this->update_date,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
             'app_featured_home_sort' => $this->app_featured_home_sort,
         ]);
 
@@ -73,8 +73,8 @@ class CategorySearch extends Category
             ->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'parent_id', $this->parent_id])
             ->andFilterWhere(['like', 'del_flag', $this->del_flag])
-            ->andFilterWhere(['like', 'create_by', $this->create_by])
-            ->andFilterWhere(['like', 'update_by', $this->update_by])
+            ->andFilterWhere(['like', 'created_by', $this->created_by])
+            ->andFilterWhere(['like', 'updated_by', $this->updated_by])
             ->andFilterWhere(['like', 'short_description', $this->short_description])
             ->andFilterWhere(['like', 'app_featured_home', $this->app_featured_home])
             ->andFilterWhere(['like', 'parent_ids', $this->parent_ids])
