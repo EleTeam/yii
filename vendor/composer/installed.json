@@ -49,94 +49,6 @@
         ]
     },
     {
-        "name": "swiftmailer/swiftmailer",
-        "version": "v5.4.1",
-        "version_normalized": "5.4.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/swiftmailer/swiftmailer.git",
-            "reference": "0697e6aa65c83edf97bb0f23d8763f94e3f11421"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/0697e6aa65c83edf97bb0f23d8763f94e3f11421",
-            "reference": "0697e6aa65c83edf97bb0f23d8763f94e3f11421",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.3"
-        },
-        "require-dev": {
-            "mockery/mockery": "~0.9.1,<0.9.4"
-        },
-        "time": "2015-06-06 14:19:39",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "5.4-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "files": [
-                "lib/swift_required.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Chris Corbyn"
-            },
-            {
-                "name": "Fabien Potencier",
-                "email": "fabien@symfony.com"
-            }
-        ],
-        "description": "Swiftmailer, free feature-rich PHP mailer",
-        "homepage": "http://swiftmailer.org",
-        "keywords": [
-            "email",
-            "mail",
-            "mailer"
-        ]
-    },
-    {
-        "name": "bower-asset/jquery",
-        "version": "2.2.3",
-        "version_normalized": "2.2.3.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/jquery/jquery-dist.git",
-            "reference": "af22a351b2ea5801ffb1695abb3bb34d5bed9198"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/jquery/jquery-dist/zipball/af22a351b2ea5801ffb1695abb3bb34d5bed9198",
-            "reference": "af22a351b2ea5801ffb1695abb3bb34d5bed9198",
-            "shasum": ""
-        },
-        "type": "bower-asset-library",
-        "extra": {
-            "bower-asset-main": "dist/jquery.js",
-            "bower-asset-ignore": [
-                "package.json"
-            ]
-        },
-        "installation-source": "dist",
-        "license": [
-            "MIT"
-        ],
-        "keywords": [
-            "browser",
-            "javascript",
-            "jquery",
-            "library"
-        ]
-    },
-    {
         "name": "bower-asset/yii2-pjax",
         "version": "v2.0.6",
         "version_normalized": "2.0.6.0",
@@ -830,60 +742,6 @@
         ]
     },
     {
-        "name": "fzaninotto/faker",
-        "version": "v1.5.0",
-        "version_normalized": "1.5.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/fzaninotto/Faker.git",
-            "reference": "d0190b156bcca848d401fb80f31f504f37141c8d"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/d0190b156bcca848d401fb80f31f504f37141c8d",
-            "reference": "d0190b156bcca848d401fb80f31f504f37141c8d",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.3"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "~4.0",
-            "squizlabs/php_codesniffer": "~1.5"
-        },
-        "suggest": {
-            "ext-intl": "*"
-        },
-        "time": "2015-05-29 06:29:14",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.5.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Faker\\": "src/Faker/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "François Zaninotto"
-            }
-        ],
-        "description": "Faker is a PHP library that generates fake data for you.",
-        "keywords": [
-            "data",
-            "faker",
-            "fixtures"
-        ]
-    },
-    {
         "name": "yiisoft/yii2-faker",
         "version": "2.0.3",
         "version_normalized": "2.0.3.0",
@@ -979,293 +837,167 @@
         ]
     },
     {
-        "name": "bower-asset/blueimp-canvas-to-blob",
-        "version": "v3.3.0",
-        "version_normalized": "3.3.0.0",
+        "name": "bower-asset/jquery",
+        "version": "2.2.4",
+        "version_normalized": "2.2.4.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/blueimp/JavaScript-Canvas-to-Blob.git",
-            "reference": "cb5add6fd18abba567c4824a601f57b9a9e30e04"
+            "url": "https://github.com/jquery/jquery-dist.git",
+            "reference": "c0185ab7c75aab88762c5aae780b9d83b80eda72"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/blueimp/JavaScript-Canvas-to-Blob/zipball/cb5add6fd18abba567c4824a601f57b9a9e30e04",
-            "reference": "cb5add6fd18abba567c4824a601f57b9a9e30e04",
+            "url": "https://api.github.com/repos/jquery/jquery-dist/zipball/c0185ab7c75aab88762c5aae780b9d83b80eda72",
+            "reference": "c0185ab7c75aab88762c5aae780b9d83b80eda72",
             "shasum": ""
-        },
-        "type": "bower-asset-library",
-        "installation-source": "dist"
-    },
-    {
-        "name": "bower-asset/blueimp-load-image",
-        "version": "v2.6.1",
-        "version_normalized": "2.6.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/blueimp/JavaScript-Load-Image.git",
-            "reference": "da2e77837e81a2a0a143a77034dc01604173790a"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/blueimp/JavaScript-Load-Image/zipball/da2e77837e81a2a0a143a77034dc01604173790a",
-            "reference": "da2e77837e81a2a0a143a77034dc01604173790a",
-            "shasum": ""
-        },
-        "type": "bower-asset-library",
-        "installation-source": "dist"
-    },
-    {
-        "name": "bower-asset/blueimp-tmpl",
-        "version": "v3.4.0",
-        "version_normalized": "3.4.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/blueimp/JavaScript-Templates.git",
-            "reference": "9dc414739a4d23663018575c5036b88e0de2ba4d"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/blueimp/JavaScript-Templates/zipball/9dc414739a4d23663018575c5036b88e0de2ba4d",
-            "reference": "9dc414739a4d23663018575c5036b88e0de2ba4d",
-            "shasum": ""
-        },
-        "type": "bower-asset-library",
-        "installation-source": "dist"
-    },
-    {
-        "name": "bower-asset/blueimp-file-upload",
-        "version": "9.12.3",
-        "version_normalized": "9.12.3.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/blueimp/jQuery-File-Upload.git",
-            "reference": "c72c93c3c005bbd0c849c2e35d01daaf7d23ee51"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/blueimp/jQuery-File-Upload/zipball/c72c93c3c005bbd0c849c2e35d01daaf7d23ee51",
-            "reference": "c72c93c3c005bbd0c849c2e35d01daaf7d23ee51",
-            "shasum": ""
-        },
-        "require": {
-            "bower-asset/blueimp-canvas-to-blob": ">=2.1.1",
-            "bower-asset/blueimp-load-image": ">=1.13.0",
-            "bower-asset/blueimp-tmpl": ">=2.5.4",
-            "bower-asset/jquery": ">=1.6"
         },
         "type": "bower-asset-library",
         "extra": {
-            "bower-asset-main": [
-                "js/jquery.fileupload.js"
-            ],
+            "bower-asset-main": "dist/jquery.js",
             "bower-asset-ignore": [
-                "/*.*",
-                "/cors",
-                "css/demo-ie8.css",
-                "css/demo.css",
-                "css/style.css",
-                "js/app.js",
-                "js/main.js",
-                "server",
-                "test"
+                "package.json"
             ]
         },
         "installation-source": "dist",
         "license": [
             "MIT"
         ],
-        "description": "File Upload widget with multiple file selection, drag&amp;drop support, progress bar, validation and preview images.",
         "keywords": [
-            "bootstrap",
-            "chunk",
-            "cross-domain",
-            "cross-site",
-            "drag",
-            "drop",
-            "file",
-            "gae",
-            "go",
+            "browser",
+            "javascript",
             "jquery",
-            "multiple",
-            "php",
-            "preview",
-            "progress",
-            "python",
-            "resume",
-            "selection",
-            "upload",
-            "widget"
+            "library"
         ]
     },
     {
-        "name": "bower-asset/blueimp-gallery",
-        "version": "2.15.4",
-        "version_normalized": "2.15.4.0",
+        "name": "swiftmailer/swiftmailer",
+        "version": "v5.4.2",
+        "version_normalized": "5.4.2.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/blueimp/Gallery.git",
-            "reference": "2b65bd364dd5945809f2eda61fb3eb4a0a6fa095"
+            "url": "https://github.com/swiftmailer/swiftmailer.git",
+            "reference": "d8db871a54619458a805229a057ea2af33c753e8"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/blueimp/Gallery/zipball/2b65bd364dd5945809f2eda61fb3eb4a0a6fa095",
-            "reference": "2b65bd364dd5945809f2eda61fb3eb4a0a6fa095",
+            "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/d8db871a54619458a805229a057ea2af33c753e8",
+            "reference": "d8db871a54619458a805229a057ea2af33c753e8",
             "shasum": ""
         },
-        "type": "bower-asset-library",
+        "require": {
+            "php": ">=5.3.3"
+        },
+        "require-dev": {
+            "mockery/mockery": "~0.9.1,<0.9.4"
+        },
+        "time": "2016-05-01 08:45:47",
+        "type": "library",
         "extra": {
-            "bower-asset-main": [
-                "css/blueimp-gallery.css",
-                "css/blueimp-gallery-indicator.css",
-                "css/blueimp-gallery-video.css",
-                "img/error.png",
-                "img/error.svg",
-                "img/loading.gif",
-                "img/play-pause.png",
-                "img/play-pause.svg",
-                "img/video-play.png",
-                "img/video-play.svg",
-                "js/blueimp-helper.js",
-                "js/blueimp-gallery.js",
-                "js/blueimp-gallery-fullscreen.js",
-                "js/blueimp-gallery-indicator.js",
-                "js/blueimp-gallery-video.js",
-                "js/blueimp-gallery-vimeo.js",
-                "js/blueimp-gallery-youtube.js"
-            ],
-            "bower-asset-ignore": [
-                "/*.*",
-                "css/demo.css",
-                "js/demo.js"
-            ]
+            "branch-alias": {
+                "dev-master": "5.4-dev"
+            }
         },
         "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "lib/swift_required.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
         "license": [
             "MIT"
         ],
-        "description": "blueimp Gallery is a touch-enabled, responsive and customizable image and video gallery, carousel and lightbox, optimized for both mobile and desktop web browsers. It features swipe, mouse and keyboard navigation, transition effects, slideshow functionality, fullscreen support and on-demand content loading and can be extended to display additional content types.",
+        "authors": [
+            {
+                "name": "Chris Corbyn"
+            },
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            }
+        ],
+        "description": "Swiftmailer, free feature-rich PHP mailer",
+        "homepage": "http://swiftmailer.org",
         "keywords": [
-            "carousel",
-            "desktop",
-            "effects",
-            "fullscreen",
-            "gallery",
-            "image",
-            "keyboard",
-            "lightbox",
-            "mobile",
-            "mouse",
-            "navigation",
-            "responsive",
-            "slideshow",
-            "swipe",
-            "touch",
-            "transition",
-            "video"
+            "email",
+            "mail",
+            "mailer"
         ]
     },
     {
-        "name": "2amigos/yii2-gallery-widget",
-        "version": "1.0.2",
-        "version_normalized": "1.0.2.0",
+        "name": "fzaninotto/faker",
+        "version": "v1.6.0",
+        "version_normalized": "1.6.0.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/2amigos/yii2-gallery-widget.git",
-            "reference": "77ae3c5e19b027f5c2f2147ce8c14a7a916ad6fc"
+            "url": "https://github.com/fzaninotto/Faker.git",
+            "reference": "44f9a286a04b80c76a4e5fb7aad8bb539b920123"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/2amigos/yii2-gallery-widget/zipball/77ae3c5e19b027f5c2f2147ce8c14a7a916ad6fc",
-            "reference": "77ae3c5e19b027f5c2f2147ce8c14a7a916ad6fc",
+            "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/44f9a286a04b80c76a4e5fb7aad8bb539b920123",
+            "reference": "44f9a286a04b80c76a4e5fb7aad8bb539b920123",
             "shasum": ""
         },
         "require": {
-            "bower-asset/blueimp-gallery": "~2.15.0",
-            "yiisoft/yii2": "~2.0.0"
+            "php": "^5.3.3|^7.0"
         },
         "require-dev": {
+            "ext-intl": "*",
             "phpunit/phpunit": "~4.0",
-            "scrutinizer/ocular": "~1.1"
+            "squizlabs/php_codesniffer": "~1.5"
         },
-        "time": "2016-01-04 06:27:31",
-        "type": "yii2-extension",
+        "time": "2016-04-29 12:21:54",
+        "type": "library",
         "extra": {
-            "asset-installer-paths": {
-                "npm-asset-library": "vendor/npm",
-                "bower-asset-library": "vendor/bower"
-            },
-            "branch-alias": {
-                "dev-master": "1.0-dev"
-            }
+            "branch-alias": []
         },
         "installation-source": "dist",
         "autoload": {
             "psr-4": {
-                "dosamigos\\gallery\\": "src"
+                "Faker\\": "src/Faker/"
             }
         },
         "notification-url": "https://packagist.org/downloads/",
         "license": [
-            "BSD-3-Clause"
+            "MIT"
         ],
         "authors": [
             {
-                "name": "2amigOS! Consulting Group",
-                "email": "hola@2amigos.us",
-                "homepage": "http://2amigos.us",
-                "role": "Developer"
+                "name": "François Zaninotto"
             }
         ],
-        "description": "Blueimp gallery widget for the Yii framework",
-        "homepage": "https://github.com/2amigos/yii2-gallery-widget",
+        "description": "Faker is a PHP library that generates fake data for you.",
         "keywords": [
-            "2amigos",
-            "gallery",
-            "widget",
-            "yii",
-            "yii 2",
-            "yii2"
+            "data",
+            "faker",
+            "fixtures"
         ]
     },
     {
-        "name": "2amigos/yii2-file-upload-widget",
-        "version": "1.0.4",
-        "version_normalized": "1.0.4.0",
+        "name": "xj/yii2-uploadify-widget",
+        "version": "2.0.3",
+        "version_normalized": "2.0.3.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/2amigos/yii2-file-upload-widget.git",
-            "reference": "b8558141a4f340337e9f55e88880872cacc8e44d"
+            "url": "https://github.com/xjflyttp/yii2-uploadify-widget.git",
+            "reference": "7cfe047f252d9f938bcd229d3933ab27a0ce00fe"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/2amigos/yii2-file-upload-widget/zipball/b8558141a4f340337e9f55e88880872cacc8e44d",
-            "reference": "b8558141a4f340337e9f55e88880872cacc8e44d",
+            "url": "https://api.github.com/repos/xjflyttp/yii2-uploadify-widget/zipball/7cfe047f252d9f938bcd229d3933ab27a0ce00fe",
+            "reference": "7cfe047f252d9f938bcd229d3933ab27a0ce00fe",
             "shasum": ""
         },
         "require": {
-            "2amigos/yii2-gallery-widget": "~1.0",
-            "bower-asset/blueimp-file-upload": "~9.9",
-            "yiisoft/yii2": "~2.0.0",
-            "yiisoft/yii2-bootstrap": "~2.0.0"
+            "yiisoft/yii2": "*"
         },
-        "require-dev": {
-            "phpunit/phpunit": "~4.0"
-        },
-        "time": "2016-03-07 17:25:38",
-        "type": "yii2-extension",
-        "extra": {
-            "asset-installer-paths": {
-                "npm-asset-library": "vendor/npm",
-                "bower-asset-library": "vendor/bower"
-            },
-            "branch-alias": {
-                "dev-master": "1.0-dev"
-            }
-        },
+        "time": "2015-09-11 15:27:53",
+        "type": "library",
         "installation-source": "dist",
         "autoload": {
             "psr-4": {
-                "dosamigos\\fileupload\\": "src"
+                "xj\\uploadify\\": ""
             }
         },
         "notification-url": "https://packagist.org/downloads/",
@@ -1274,26 +1006,10 @@
         ],
         "authors": [
             {
-                "name": "2amigOS! Consulting Group",
-                "email": "hola@2amigos.us",
-                "homepage": "http://2amigos.us",
-                "role": "Developer"
-            },
-            {
-                "name": "Alexander Kochetov",
-                "email": "creocoder@gmail.com",
-                "role": "Developer"
+                "name": "xjflyttp",
+                "email": "xjflyttp@gmail.com"
             }
         ],
-        "description": "Blueimp file upload widget for the Yii framework",
-        "homepage": "https://github.com/2amigos/yii2-file-upload-widget",
-        "keywords": [
-            "2amigos",
-            "upload",
-            "widget",
-            "yii",
-            "yii 2",
-            "yii2"
-        ]
+        "description": "yii2-uploadify-widget"
     }
 ]

@@ -24,10 +24,9 @@ class ComposerStaticInit97f60f486aee3c9bc14072d1bbd961d8
             'yii\\bootstrap\\' => 14,
             'yii\\' => 4,
         ),
-        'd' => 
+        'x' => 
         array (
-            'dosamigos\\gallery\\' => 18,
-            'dosamigos\\fileupload\\' => 21,
+            'xj\\uploadify\\' => 13,
         ),
         'c' => 
         array (
@@ -76,13 +75,9 @@ class ComposerStaticInit97f60f486aee3c9bc14072d1bbd961d8
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2',
         ),
-        'dosamigos\\gallery\\' => 
+        'xj\\uploadify\\' => 
         array (
-            0 => __DIR__ . '/..' . '/2amigos/yii2-gallery-widget/src',
-        ),
-        'dosamigos\\fileupload\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/2amigos/yii2-file-upload-widget/src',
+            0 => __DIR__ . '/..' . '/xj/yii2-uploadify-widget',
         ),
         'cebe\\markdown\\' => 
         array (

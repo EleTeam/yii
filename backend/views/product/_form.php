@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\web\JsExpression;
+use xj\uploadify\Uploadify;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Product */
@@ -20,19 +22,84 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id')->textInput(['maxlength' => true]) ?>
 
-
     <div class="form-group field-product-image">
         <label for="product-image" class="col-lg-2 control-label"><?=Yii::t('app', 'Image')?></label>
         <div class="col-lg-8">
-            <img id="show-product-image" src="<?=$model->image?>" class="" width="80" height="80" style="margin-right:10px;"/>
-
+            <input type="hidden" value="<?=$model->image?>" name="Product[image]" class="form-control" id="product-image">
+            <img id="show-product-image" src="<?=Yii::getAlias('@imghost').$model->image?>" class="" width="80" height="80" style="margin-right:10px;"/>
+            <?php
+            echo Html::fileInput('image', $model->image, ['id' => 'image']);
+            echo Uploadify::widget([
+                'url' => yii\helpers\Url::to(['s-upload']),
+                'id' => 'image',
+                'csrf' => true,
+                'renderTag' => false,
+                'jsOptions' => [
+                    'width' => 100,
+                    'height' => 30,
+                    'onUploadError' => new JsExpression(<<<EOF
+function(file, errorCode, errorMsg, errorString) {
+    console.log('The file ' + file.name + ' could not be uploaded: ' + errorString + errorCode + errorMsg);
+}
+EOF
+                    ),
+                    'onUploadSuccess' => new JsExpression(<<<EOF
+function(file, data, response) {
+    data = JSON.parse(data);
+    if (data.error) {
+        console.log(data.msg);
+    } else {
+        $('#show-product-image').attr('src', data.fileUrl);
+        $('#product-image').val(data.filePath);
+        //console.log(data.fileUrl);
+    }
+}
+EOF
+                    ),
+                ]
+            ]);
+            ?>
             <div class="help-block"></div>
         </div>
     </div>
 
-    <?= $form->field($model, 'featured_image')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'image_small')->textInput(['maxlength' => true]) ?>
+    <div class="form-group field-product-image_small">
+        <label for="product-image_small" class="col-lg-2 control-label"><?=Yii::t('app', 'Small Image')?></label>
+        <div class="col-lg-8">
+            <img id="show-product-image_small" src="<?=Yii::getAlias('@imghost').$model->image_small?>" class="" width="80" height="80" style="margin-right:10px;"/>
+            <?php
+            echo Html::fileInput('image_small', $model->image, ['id' => 'image_small']);
+            echo Uploadify::widget([
+                'url' => yii\helpers\Url::to(['s-upload']),
+                'id' => 'image_small',
+                'csrf' => true,
+                'renderTag' => false,
+                'jsOptions' => [
+                    'width' => 100,
+                    'height' => 30,
+                    'onUploadError' => new JsExpression(<<<EOF
+function(file, errorCode, errorMsg, errorString) {
+    console.log('The file ' + file.name + ' could not be uploaded: ' + errorString + errorCode + errorMsg);
+}
+EOF
+                    ),
+                    'onUploadSuccess' => new JsExpression(<<<EOF
+function(file, data, response) {
+    data = JSON.parse(data);
+    if (data.error) {
+        console.log(data.msg);
+    } else {
+        console.log(data.fileUrl);
+    }
+}
+EOF
+                    ),
+                ]
+            ]);
+            ?>
+            <div class="help-block"></div>
+        </div>
+    </div>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 

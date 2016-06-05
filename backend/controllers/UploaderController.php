@@ -4,85 +4,58 @@ namespace backend\controllers;
 
 use Yii;
 use backend\components\BaseController;
-use yii\helpers\Json;
-use yii\web\UploadedFile;
-use yii\web\Response;
+use xj\uploadify\UploadAction;
 
 /**
- * 文件(图片)上传控制器, 文件保存在 data/uploads/public/product|category/$id
+ * 文件(图片)上传控制器, 文件保存在 @data/uploads/public/product|category/$user_id/$imagepath
  */
 class UploaderController extends BaseController
 {
-    public function actionUpload()
-    {
-        Yii::$app->response->format = Response::FORMAT_JSON;
-
-        $modelName = $this->_getModelName();
-        $imageFile = UploadedFile::getInstanceByName($modelName.'[image]');
-        $dbImagePath = '/uploads/public/' . strtolower($modelName) . '/' . Yii::$app->user->id . '/';
-        $directory = Yii::getAlias('@data') . $dbImagePath;
-
-        if (!is_dir($directory)) {
-            mkdir($directory);
-        }
-
-        if ($imageFile) {
-            $uid = uniqid();
-            $fileName = $uid . '.' . $imageFile->extension;
-            $filePath = $directory . $fileName;
-            if ($imageFile->saveAs($filePath)) {
-                $path = $dbImagePath . $fileName;
-                return Json::encode([
-                    'files' => [[
-                        'name' => $fileName,
-                        'size' => $imageFile->size,
-                        "url" => $path,
-                        "thumbnailUrl" => $path,
-                        "deleteUrl" => 'delete?name=' . $fileName,
-                        "deleteType" => "POST"
-                    ]]
-                ]);
-            }
-        }
-        return '';
-    }
-
-    public function actionDelete($name)
-    {
-        $modelName = $this->_getModelName();
-        $dbImagePath = '/uploads/public/' . strtolower($modelName) . '/' . Yii::$app->user->id . '/';
-        $filepath = Yii::getAlias('@data') . $dbImagePath . $dbImagePath . $name;
-
-        $directory = \Yii::getAlias('@frontend/web/img/temp') . DIRECTORY_SEPARATOR . Yii::$app->session->id;
-        if (is_file($filepath)) {
-            unlink($filepath);
-        }
-
-        $files = FileHelper::findFiles($directory);
-        $output = [];
-        foreach ($files as $file){
-            $path = '/img/temp/' . Yii::$app->session->id . DIRECTORY_SEPARATOR . basename($file);
-            $output['files'][] = [
-                'name' => $file,
-                'size' => filesize($file),
-                "url" => $path,
-                "thumbnailUrl" => $path,
-                "deleteUrl" => 'delete?name=' . $file,
-                "deleteType" => "POST"
-            ];
-        }
-        return Json::encode($output);
-    }
-
-    private function _getModelName()
-    {
-        $modelName = '';
-        if(isset($_POST['Product'])){ //产品图片
-            $modelName = 'Product';
-        }
-        else if(isset($_POST['Category'])){ //分类图片
-            $modelName = 'Category';
-        }
-        return $modelName;
+    public function actions() {
+        return [
+            's-upload' => [
+                'class' => UploadAction::className(),
+                'basePath' => '@webroot/upload',
+                'baseUrl' => '@web/upload',
+                'enableCsrf' => true, // default
+                'postFieldName' => 'Filedata', // default
+                //BEGIN METHOD
+                'format' => [$this, 'methodName'],
+                //END METHOD
+                //BEGIN CLOSURE BY-HASH
+                'overwriteIfExist' => true,
+                'format' => function (UploadAction $action) {
+                    $fileext = $action->uploadfile->getExtension();
+                    $filename = sha1_file($action->uploadfile->tempName);
+                    return "{$filename}.{$fileext}";
+                },
+                //END CLOSURE BY-HASH
+                //BEGIN CLOSURE BY TIME
+                'format' => function (UploadAction $action) {
+                    $fileext = $action->uploadfile->getExtension();
+                    $filehash = sha1(uniqid() . time());
+                    $p1 = substr($filehash, 0, 2);
+                    $p2 = substr($filehash, 2, 2);
+                    return "{$p1}/{$p2}/{$filehash}.{$fileext}";
+                },
+                //END CLOSURE BY TIME
+                'validateOptions' => [
+                    'extensions' => ['jpg', 'png'],
+                    'maxSize' => 1 * 1024 * 1024, //file size
+                ],
+                'beforeValidate' => function (UploadAction $action) {
+                    //throw new Exception('test error');
+                },
+                'afterValidate' => function (UploadAction $action) {},
+                'beforeSave' => function (UploadAction $action) {},
+                'afterSave' => function (UploadAction $action) {
+                    $action->output['fileUrl'] = Yii::getAlias('@imghost') . $action->getWebUrl();
+                    $action->output['filePath'] = $action->getWebUrl();
+                    $action->getFilename(); // "image/yyyymmddtimerand.jpg"
+                    $action->getWebUrl(); //  "baseUrl + filename, /upload/image/yyyymmddtimerand.jpg"
+                    $action->getSavePath(); // "/var/www/htdocs/upload/image/yyyymmddtimerand.jpg"
+                },
+            ],
+        ];
     }
 }
