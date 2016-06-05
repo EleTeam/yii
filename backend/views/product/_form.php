@@ -10,11 +10,25 @@ use yii\widgets\ActiveForm;
 
 <div class="product-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'options' => ['enctype' => 'multipart/form-data', 'class' => 'form-horizontal'],
+        'fieldConfig' => [
+            'template' => "{label}\n<div class=\"col-lg-8\">{input} {error}</div>",
+            'labelOptions' => ['class' => 'col-lg-2 control-label'],
+        ],
+    ]); ?>
 
     <?= $form->field($model, 'id')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'image')->textInput(['maxlength' => true]) ?>
+
+    <div class="form-group field-product-image">
+        <label for="product-image" class="col-lg-2 control-label"><?=Yii::t('app', 'Image')?></label>
+        <div class="col-lg-8">
+            <img id="show-product-image" src="<?=$model->image?>" class="" width="80" height="80" style="margin-right:10px;"/>
+
+            <div class="help-block"></div>
+        </div>
+    </div>
 
     <?= $form->field($model, 'featured_image')->textInput(['maxlength' => true]) ?>
 
