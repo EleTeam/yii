@@ -11,7 +11,16 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
-    'modules' => [],
+    'modules' => [
+        'redactor' => [
+            'class' => 'yii\redactor\RedactorModule',
+            'uploadDir' => '@data/uploads/public/editor',
+            'uploadUrl' => '@imghost/uploads/public/editor',
+            'imageAllowExtensions' => ['jpg','jpeg','png','gif','bmp'],
+            //'widgetClientOptions' => ['plugins' => ['clips', 'fontcolor','imagemanager'], 'lang'=>'zh_cn'],
+            'widgetClientOptions' => ['plugins' => ['fontcolor'], 'lang'=>'zh_cn'],
+        ],
+    ],
     'components' => [
         'user' => [
             'identityClass' => 'common\models\User',

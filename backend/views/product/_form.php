@@ -56,7 +56,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'featured')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'description')->widget(\yii\redactor\widgets\Redactor::className()) ?>
 
     <?= $form->field($model, 'category_id')->textInput(['maxlength' => true]) ?>
 
