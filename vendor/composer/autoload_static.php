@@ -28,6 +28,10 @@ class ComposerStaticInit97f60f486aee3c9bc14072d1bbd961d8
         array (
             'xj\\uploadify\\' => 13,
         ),
+        'm' => 
+        array (
+            'mdm\\admin\\' => 10,
+        ),
         'c' => 
         array (
             'cebe\\markdown\\' => 14,
@@ -78,6 +82,10 @@ class ComposerStaticInit97f60f486aee3c9bc14072d1bbd961d8
         'xj\\uploadify\\' => 
         array (
             0 => __DIR__ . '/..' . '/xj/yii2-uploadify-widget',
+        ),
+        'mdm\\admin\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/mdmsoft/yii2-admin',
         ),
         'cebe\\markdown\\' => 
         array (
