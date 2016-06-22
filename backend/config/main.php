@@ -20,6 +20,10 @@ return [
             //'widgetClientOptions' => ['plugins' => ['clips', 'fontcolor','imagemanager'], 'lang'=>'zh_cn'],
             'widgetClientOptions' => ['plugins' => ['fontcolor'], 'lang'=>'zh_cn'],
         ],
+        'admin' => [
+            'class' => 'mdm\admin\Module',
+            'layout' => 'left-menu',//yii2-admin的导航菜单
+        ]
     ],
     'components' => [
         'user' => [
@@ -43,6 +47,23 @@ return [
             'showScriptName' => false,
             'rules' => [
             ],
+        ],
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager', // or use 'yii\rbac\PhpManager'
+            'defaultRoles'=> ['guest'],
+        ],
+        'as access' => [
+            'class' => 'mdm\admin\components\AccessControl',
+            'allowActions' => [
+                //'site/*',//允许访问的节点，可自行添加
+                'admin/*',//允许所有人访问admin节点及其子节点
+                'some-controller/some-action',
+                // The actions listed here will be allowed to everyone including guests.
+                // So, 'admin/*' should not appear here in the production, of course.
+                // But in the earlier stages of your development, you may probably want to
+                // add a lot of actions here until you finally completed setting up rbac,
+                // otherwise you may not even take a first step.
+            ]
         ],
     ],
     'params' => $params,
