@@ -46,6 +46,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'remarks')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'is_audit')->textInput(['maxlength' => true]) ?>
+
     <?= $form->field($model, 'meta_keywords')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'meta_description')->textInput(['maxlength' => true]) ?>

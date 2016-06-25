@@ -9,7 +9,7 @@ use yii\db\ActiveRecord;
 /**
  * 基类模型
  */
-class BaseModel extends ActiveRecord
+class ETActiveRecord extends ActiveRecord
 {
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE   = 1;

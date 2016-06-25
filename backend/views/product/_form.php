@@ -105,11 +105,9 @@ EOF
 
     <?= $form->field($model, 'sort')->textInput() ?>
 
-    <?= $form->field($model, 'del_flag')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'created_by')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'create_by')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'update_by')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'updated_by')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'price')->textInput(['maxlength' => true]) ?>
 

@@ -2,9 +2,9 @@
 
 namespace api\modules\v1\controllers;
 
-use api\components\BaseController;
+use yii\rest\ActiveController;
 
-class UserController extends BaseController
+class UserController extends ActiveController
 {
     public $modelClass = 'common\models\User';
 }

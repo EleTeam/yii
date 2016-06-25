@@ -6,14 +6,14 @@ use common\models\Category;
 use Yii;
 use common\models\Product;
 use common\models\ProductSearch;
-use backend\components\BaseController;
+use common\components\ETWebController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
  * 移植控制器
  */
-class MigrationController extends BaseController
+class MigrationController extends ETWebController
 {
     public function actionIndex()
     {

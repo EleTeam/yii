@@ -7,12 +7,12 @@
  * @email 908601756@qq.com
  */
 
-namespace api\components;
+namespace common\components;
 
 use Yii;
-use yii\rest\ActiveController;
+use yii\web\Controller;
 
-class BaseController extends ActiveController
+class ETWebController extends Controller
 {
     public function init()
     {
@@ -37,11 +37,11 @@ class BaseController extends ActiveController
                 'expire' => time() + (365 * 24 * 60 * 60),
             ]));
         }
-//        elseif (isset(Yii::$app->request->cookies['lang']) &&
-//            Yii::$app->request->cookies['lang']->value != "") {
-//            // COOKIE in accordance with the language type to set the language
-//            Yii::$app->language = Yii::$app->request->cookies['lang']->value;
-//        }
+        elseif (isset(Yii::$app->request->cookies['lang']) &&
+            Yii::$app->request->cookies['lang']->value != "") {
+            // COOKIE in accordance with the language type to set the language
+            Yii::$app->language = Yii::$app->request->cookies['lang']->value;
+        }
 //        elseif (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
 //            // According to the browser language to set the language
 //            $lang = explode(',',$_SERVER['HTTP_ACCEPT_LANGUAGE']);

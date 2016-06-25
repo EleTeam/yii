@@ -49,6 +49,8 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'remarks') ?>
 
+    <?php // echo $form->field($model, 'is_audit') ?>
+
     <?php // echo $form->field($model, 'meta_keywords') ?>
 
     <?php // echo $form->field($model, 'meta_description') ?>

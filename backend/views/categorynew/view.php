@@ -4,13 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Product */
+/* @var $model common\models\Category */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Products'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Categories'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="product-view">
+<div class="category-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -29,41 +29,29 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
+            'featured',
             'image',
             'featured_image',
             'image_small',
             'name',
+            'parent_id',
             'sort',
             'created_at',
             'created_by',
             'updated_at',
             'updated_by',
-            'price',
-            'featured_price',
-            'featured_position',
-            'featured_position_sort',
+            'short_description',
             'app_featured_home',
             'app_featured_home_sort',
-            'app_featured_image',
-            'short_description',
+            'parent_ids',
+            'remarks',
+            'is_audit',
             'meta_keywords',
             'meta_description',
-            'is_audit',
-            'remarks',
-            'featured',
-            'description:ntext',
-            'category_id',
+            'href',
+            'href_target',
             'image_medium',
             'image_large',
-            'app_featured_topic',
-            'app_featured_topic_sort',
-            'app_long_image1',
-            'app_long_image2',
-            'app_long_image3',
-            'type',
-            'app_long_image4',
-            'app_long_image5',
-            'status',
         ],
     ]) ?>
 

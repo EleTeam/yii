@@ -3,13 +3,13 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\components\BaseController;
+use common\components\ETWebController;
 use xj\uploadify\UploadAction;
 
 /**
  * 文件(图片)上传控制器, 文件保存在 @data/uploads/public/product|category/$user_id/$imagepath
  */
-class UploaderController extends BaseController
+class UploaderController extends ETWebController
 {
     public function actions() {
         return [

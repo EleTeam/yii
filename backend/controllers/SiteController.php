@@ -2,7 +2,7 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\components\BaseController;
+use common\components\ETWebController;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
@@ -10,7 +10,7 @@ use common\models\LoginForm;
 /**
  * Site controller
  */
-class SiteController extends BaseController
+class SiteController extends ETWebController
 {
     /**
      * @inheritdoc
