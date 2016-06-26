@@ -143,4 +143,13 @@ class Product extends ETActiveRecord
     {
         return $this->hasMany(ProductAttrItem::className(), ['id' => 'item_id'])->viaTable('product_attr', ['product_id' => 'id']);
     }
+
+    public static function listAllByCategoryId($category_id, $fields='*', $orderBy='sort asc', $status=1)
+    {
+        return self::find()
+            ->select($fields)
+            ->where('category_id = :category_id and status = :status',
+                [':category_id' => $category_id, ':status' => $status])
+            ->orderBy($orderBy);
+    }
 }

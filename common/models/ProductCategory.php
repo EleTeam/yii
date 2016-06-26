@@ -36,6 +36,8 @@ use Yii;
  */
 class ProductCategory extends ETActiveRecord
 {
+    const ROOT_LEVEL_ID = 1;
+
     /**
      * @inheritdoc
      */
@@ -100,5 +102,21 @@ class ProductCategory extends ETActiveRecord
     public function getProducts()
     {
         return $this->hasMany(Product::className(), ['category_id' => 'id']);
+    }
+
+    /**
+     * 查找第一级分类
+     * @param string $fields
+     * @param string $orderBy
+     * @param int $status
+     * @return $this
+     */
+    public static function findFirstLevels($fields='*', $orderBy='sort asc', $status=1)
+    {
+        return self::find()
+            ->select($fields)
+            ->where('parent_id = :parent_id and status = :status',
+                [':parent_id' => self::ROOT_LEVEL_ID, ':status' => $status])
+            ->orderBy($orderBy);
     }
 }

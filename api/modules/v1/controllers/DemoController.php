@@ -6,7 +6,7 @@ use common\models\ProductCategory;
 use yii\data\ActiveDataProvider;
 use yii\rest\ActiveController;
 
-class CategoryController extends ActiveController
+class DemoController extends ActiveController
 {
     public $modelClass = 'common\models\ProductCategory';
 
