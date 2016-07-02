@@ -2,6 +2,7 @@
 
 namespace api\modules\v1\controllers;
 
+use common\models\ProductAttrItem;
 use Yii;
 use yii\rest\ActiveController;
 use yii\data\ActiveDataProvider;
@@ -16,12 +17,31 @@ class ProductController extends ActiveController
         $actions = parent::actions();
 
         // 禁用"delete" 和 "create" 操作
-        unset($actions['delete'], $actions['create'], $actions['update']);
+        unset($actions['delete'], $actions['create'], $actions['update'], $actions['view']);
 
         // 使用"prepareDataProvider()"方法自定义数据provider
         $actions['index']['prepareDataProvider'] = [$this, 'prepareDataProviderForIndex'];
+        //$actions['view']['prepareDataProvider'] = [$this, 'prepareDataProviderForView'];
 
         return $actions;
+    }
+
+    public function actionView($id)
+    {
+        $expand = ['category', 'productAttrs'];
+        $product = Product::find()->where('id=:id', [':id'=>$id])->with($expand)->one();
+
+        //查找商品属性对象, @todo
+        $productArr = $product->toArray([], $expand);
+        if(isset($productArr['productAttrs'])){
+            foreach($productArr['productAttrs'] as &$attr){
+                $attrItem = ProductAttrItem::find()->where('id=:id', [':id'=>$attr['item_id']])->with(['productAttrItemValues'])->one();
+                $attr['productAttrItem'] = $attrItem->toArray([], ['productAttrItemValues']);
+            }
+        }
+
+        //return $product->toArray(['id'], $expand);
+        return $productArr;
     }
 
     public function prepareDataProviderForIndex()
