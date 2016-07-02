@@ -40,8 +40,14 @@ class ProductController extends ActiveController
             }
         }
 
-        //return $product->toArray(['id'], $expand);
-        return $productArr;
+        //购物车项数量
+
+        $data = [
+            'product' => $productArr,
+            'cart_item_num' => 2,
+            'product_collected' => '1',
+        ];
+        return $data;
     }
 
     public function prepareDataProviderForIndex()
@@ -51,22 +57,5 @@ class ProductController extends ActiveController
             'id, name, category_id, price, featured_price, image_small, short_description');
         $dataProvider = new ActiveDataProvider(['query' => $query]);
         return $dataProvider;
-    }
-
-    /**
-     * 对结果集合的图片进行重新赋值
-     * @param \yii\base\Action $action
-     * @param mixed $result
-     * @return mixed
-     */
-    public function afterAction($action, $result)
-    {
-        $result = parent::afterAction($action, $result);
-        foreach($result as &$item){
-            if(isset($item['image_small']) && $item['image_small']){
-                $item['image_small'] = Yii::getAlias('@imghost') . $item['image_small'];
-            }
-        }
-        return $this->serializeData($result);
     }
 }

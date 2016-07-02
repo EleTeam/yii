@@ -39,9 +39,9 @@ use Yii;
  * @property string $app_long_image1
  * @property string $app_long_image2
  * @property string $app_long_image3
- * @property string $type
  * @property string $app_long_image4
  * @property string $app_long_image5
+ * @property string $type
  * @property integer $status
  *
  * @property ProductCategory $category
@@ -118,6 +118,33 @@ class Product extends ETActiveRecord
             'app_long_image5' => Yii::t('app', 'App Long Image5'),
             'status' => Yii::t('app', 'Status'),
         ];
+    }
+
+    public function getAttribute($name)
+    {
+        $value = parent::getAttribute($name);
+        return 'a';
+    }
+
+    public function __get($name)
+    {
+        $value = parent::__get($name);
+
+        //图片加上前缀
+        if($name == 'app_long_image1' && $value)
+            $value = Yii::getAlias('@imghost') . $value;
+        if($name == 'app_long_image2' && $value)
+            $value = Yii::getAlias('@imghost') . $value;
+        if($name == 'app_long_image3' && $value)
+            $value = Yii::getAlias('@imghost') . $value;
+        if($name == 'app_long_image4' && $value)
+            $value = Yii::getAlias('@imghost') . $value;
+        if($name == 'app_long_image5' && $value)
+            $value = Yii::getAlias('@imghost') . $value;
+        if($name == 'image_small' && $value)
+            $value = Yii::getAlias('@imghost') . $value;
+
+        return $value;
     }
 
     /**
