@@ -55,6 +55,9 @@ class ProductController extends ActiveController
         $category_id = $_GET['category_id'];
         $query = Product::listAllByCategoryId($category_id,
             'id, name, category_id, price, featured_price, image_small, short_description');
+
+        //die($query->createCommand()->getRawSql());
+
         $dataProvider = new ActiveDataProvider(['query' => $query]);
         return $dataProvider;
     }
