@@ -40,16 +40,12 @@ return [
             'rules' => [
                 [
                     'class' => 'yii\rest\UrlRule',
-                    'controller' => ['v1/product'],
+                    'controller' => ['v1/user', 'v1/category', 'v1/product'],
                 ],
-                [
-                    'class' => 'yii\rest\UrlRule',
-                    'controller' => ['v1/user'],
-                ],
-                [
-                    'class' => 'yii\rest\UrlRule',
-                    'controller' => ['v1/category'],
-                ],
+                'OPTIONS v1/auth/login' => 'v1/auth/login',
+                'POST v1/auth/login'    => 'v1/auth/login',
+                'OPTIONS v1/auth/logout' => 'v1/auth/logout',
+                'POST v1/auth/logout'    => 'v1/auth/logout',
             ],
         ],
     ],

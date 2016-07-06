@@ -44,16 +44,6 @@ class UserController extends ActiveController
         return $actions;
     }
 
-    public function actionIsLoggedIn($user_id, $api_login_token)
-    {
-        $result = ['is_logged_in' => false];
-        $user = User::findOne($user_id);
-        if($user && $user->api_login_token && $user->api_login_token == $api_login_token){
-            $result['is_logged_in'] = true;
-        }
-        return $result;
-    }
-
     public function actionView($id)
     {
         $user = User::findOne($id);
@@ -63,5 +53,20 @@ class UserController extends ActiveController
         }
 
         return $user;
+    }
+
+    public function actionTest()
+    {
+        return ['id'=>1];
+    }
+
+    public function actionIsLoggedIn($user_id, $api_login_token)
+    {
+        $result = ['is_logged_in' => false];
+        $user = User::findOne($user_id);
+        if($user && $user->api_login_token && $user->api_login_token == $api_login_token){
+            $result['is_logged_in'] = true;
+        }
+        return $result;
     }
 }
