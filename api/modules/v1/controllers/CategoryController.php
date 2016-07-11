@@ -3,31 +3,26 @@
 namespace api\modules\v1\controllers;
 
 use common\models\ProductCategory;
+use Yii;
+use common\components\ETRestController;
+use common\models\ProductAttrItem;
 use yii\data\ActiveDataProvider;
-use yii\rest\ActiveController;
+use common\models\Product;
 
-class CategoryController extends ActiveController
+class CategoryController extends ETRestController
 {
-    public $modelClass = 'common\models\ProductCategory';
-
-    public function actions()
+    public function actionListWithProduct()
     {
-        $actions = parent::actions();
+//        $query = ProductCategory::findAll()->where()->with(['products']);
+        $query = ProductCategory::find()
+            ->where('status=:status and id!=:id', [':status'=>ProductCategory::STATUS_ACTIVE, ':id'=>ProductCategory::ROOT_LEVEL_ID])
+            ->with(['products'])
+            ->all();
+        $categories = [];
+        foreach($query as $category){
+            $categories[] = $category->toArray([], ['products']);
+        }
 
-        // 禁用"delete" 和 "create" 操作
-        unset($actions['delete'], $actions['create'], $actions['update']);
-
-        // 使用"prepareDataProvider()"方法自定义数据provider
-        $actions['index']['prepareDataProvider'] = [$this, 'prepareDataProviderForIndex'];
-
-        return $actions;
-    }
-
-    // 为"index"操作准备和返回数据provider
-    public function prepareDataProviderForIndex()
-    {
-        $query = ProductCategory::findFirstLevels('id, name');
-        $dataProvider = new ActiveDataProvider(['query' => $query]);
-        return $dataProvider;
+        return $this->jsonSuccess($categories);
     }
 }

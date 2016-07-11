@@ -2,18 +2,17 @@
 
 namespace api\modules\v1\controllers;
 
+use common\components\ETRestController;
 use common\models\User;
 use yii\filters\auth\CompositeAuth;
 use yii\filters\auth\HttpBasicAuth;
 use yii\filters\auth\HttpBearerAuth;
 use yii\filters\auth\QueryParamAuth;
 use yii\helpers\ArrayHelper;
-use yii\rest\ActiveController;
+use yii\validators\Validator;
 
-class UserController extends ActiveController
+class UserController extends ETRestController
 {
-    public $modelClass = 'common\models\User';
-
     /**
      * 行为: 登录认证
      * @return array
@@ -34,39 +33,28 @@ class UserController extends ActiveController
         ]);
     }
 
-    public function actions()
-    {
-        $actions = parent::actions();
-
-        // 注销系统自带的实现方法, 才能重新实现
-        unset($actions['delete'], $actions['view']);
-
-        return $actions;
-    }
-
     public function actionView($id)
     {
         $user = User::findOne($id);
-
-        if($user) {
-            unset($user->api_login_token);
-        }
-
-        return $user;
+        return $this->jsonSuccess(['user'=>$user->toArray()]);
     }
 
-    public function actionTest()
+    public function registerStep1($mobile)
     {
-        return ['id'=>1];
+        if(strlen($mobile)<11){
+            return $this->jsonFail([], '手机号格式不正确');
+        }
+        //发送手机验证码
+        SmsUtils.sendRegisterCode(username);
     }
 
-    public function actionIsLoggedIn($user_id, $api_login_token)
-    {
-        $result = ['is_logged_in' => false];
-        $user = User::findOne($user_id);
-        if($user && $user->api_login_token && $user->api_login_token == $api_login_token){
-            $result['is_logged_in'] = true;
-        }
-        return $result;
-    }
+//    public function actionIsLoggedIn($user_id, $api_login_token)
+//    {
+//        $result = ['is_logged_in' => false];
+//        $user = User::findOne($user_id);
+//        if($user && $user->api_login_token && $user->api_login_token == $api_login_token){
+//            $result['is_logged_in'] = true;
+//        }
+//        return $result;
+//    }
 }

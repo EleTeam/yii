@@ -35,17 +35,17 @@ return [
         ],
         'urlManager' => [
             'enablePrettyUrl' => true,
-            'enableStrictParsing' => true,
+//            'enableStrictParsing' => true,
             'showScriptName' => false,
             'rules' => [
-                [
-                    'class' => 'yii\rest\UrlRule',
-                    'controller' => ['v1/user', 'v1/category', 'v1/product'],
-                ],
-                'OPTIONS v1/auth/login' => 'v1/auth/login',
-                'POST v1/auth/login'    => 'v1/auth/login',
-                'OPTIONS v1/auth/logout' => 'v1/auth/logout',
-                'POST v1/auth/logout'    => 'v1/auth/logout',
+//                [
+//                    'class' => 'yii\rest\UrlRule',
+//                    'controller' => ['v1/user', 'v1/category', 'v1/product'],
+//                ],
+//                'OPTIONS v1/auth/login' => 'v1/auth/login',
+//                'POST v1/auth/login'    => 'v1/auth/login',
+//                'OPTIONS v1/auth/logout' => 'v1/auth/logout',
+//                'POST v1/auth/logout'    => 'v1/auth/logout',
             ],
         ],
     ],

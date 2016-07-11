@@ -20,6 +20,7 @@ use yii\web\IdentityInterface;
  * @property integer $updated_at
  * @property string $password write-only password
  * @property string $access_token
+ * @property string $mobile
  */
 class User extends ETActiveRecord implements IdentityInterface
 {
@@ -47,8 +48,35 @@ class User extends ETActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
+            [['status', 'created_at', 'updated_at'], 'integer'],
+            [['username', 'auth_key', 'access_token'], 'string', 'max' => 32],
+            [['password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
+            [['mobile'], 'string', 'max' => 11],
+            [['username'], 'unique'],
+            [['email'], 'unique'],
+            [['mobile'], 'unique'],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => Yii::t('app', 'ID'),
+            'username' => Yii::t('app', 'Username'),
+            'auth_key' => Yii::t('app', 'Auth Key'),
+            'password_hash' => Yii::t('app', 'Password Hash'),
+            'password_reset_token' => Yii::t('app', 'Password Reset Token'),
+            'email' => Yii::t('app', 'Email'),
+            'status' => Yii::t('app', 'Status'),
+            'created_at' => Yii::t('app', 'Created At'),
+            'updated_at' => Yii::t('app', 'Updated At'),
+            'access_token' => Yii::t('app', 'Access Token'),
+            'mobile' => Yii::t('app', 'Mobile'),
         ];
     }
 
@@ -106,6 +134,21 @@ class User extends ETActiveRecord implements IdentityInterface
     }
 
     /**
+     * Finds user by mobile
+     *
+     * @param string $mobile
+     * @param int $status 如果为null, 则不过滤status
+     * @return self|null
+     */
+    public static function findOneByMobile($mobile, $status=1)
+    {
+        if($status === null)
+            return self::findOne(['mobile' => $mobile]);
+        else
+            return self::findOne(['mobile' => $mobile, 'status' => $status]);
+    }
+
+    /**
      * Finds user by password reset token
      *
      * @param string $token password reset token
@@ -138,6 +181,34 @@ class User extends ETActiveRecord implements IdentityInterface
         $timestamp = (int) substr($token, strrpos($token, '_') + 1);
         $expire = Yii::$app->params['user.passwordResetTokenExpire'];
         return $timestamp + $expire >= time();
+    }
+
+    /**
+     * api获取access_token
+     * api退出, 前期退出不更新access-token, 任何平台都可以登录用户的账号,便于调试,而且不会导致用户登录的token失效
+     * 后期如果要实现单点登录时,则清空用户的token即可
+     * @return string|null
+     */
+    public function getAccessToken()
+    {
+        //验证用户是否存在
+        if(!$this->id)
+            return null;
+
+        $user = $this->findOne($this->id);
+        if(!$user || !$user->id){
+            return null;
+        }
+
+        //获取或者保存token, 只保存一次
+        if(!$this->access_token){
+            $this->access_token = $this->generateAccessToken();
+            if(!$this->save()){
+                return null;
+            }
+        }
+
+        return $this->access_token;
     }
 
     /**
