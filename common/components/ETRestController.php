@@ -17,25 +17,25 @@ class ETRestController extends Controller
     /**
      * api返回的json
      * @param $status
-     * @param $statusCode
+     * @param $code
      * @param $message
      * @param $data
      * @param array $share
      * @return string
      * @apiVersion 1.0
      */
-    private function jsonEncode($status, $data=[], $message='', $statusCode=1, $share=[])
+    private function jsonEncode($status, $data=[], $message='', $code=1, $share=[])
     {
         header('Content-type:application/json;charset=utf-8'); // 中文乱码问题
         $status     = boolval($status);
         $data       = $data ? $data : (object)array();
         $message    = strval($message);
-        $statusCode = intval($statusCode);
+        $code       = intval($code);
         $share      = $share ? $share : (object)array();
 
         $result = [
             'status'     => $status,
-            'status_code' => $statusCode,
+            'code' => $code,
             'message'    => $message,
             'data'       => $data,
             'share'      => $share,
@@ -45,15 +45,15 @@ class ETRestController extends Controller
         exit;
     }
 
-    protected function jsonSuccess($data=[], $message='', $statusCode=1, $share=array())
+    protected function jsonSuccess($data=[], $message='', $code=1, $share=array())
     {
         $message = $message ? $message : '调用成功';
-        return $this->jsonEncode(true, $data, $message, $statusCode, $share);
+        return $this->jsonEncode(true, $data, $message, $code, $share);
     }
 
-    protected function jsonFail($data=array(), $message='', $statusCode=0, $share=array())
+    protected function jsonFail($data=array(), $message='', $code=0, $share=array())
     {
         $message = $message ? $message : '调用失败';
-        return $this->jsonEncode(false, $data, $message, $statusCode, $share);
+        return $this->jsonEncode(false, $data, $message, $code, $share);
     }
 }

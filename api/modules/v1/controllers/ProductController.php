@@ -35,13 +35,15 @@ class ProductController extends ETRestController
 
     public function actionList($category_id)
     {
-        $query = Product::listAllByCategoryId($category_id,
-            'id, name, category_id, price, featured_price, image_small, short_description');
+        $products = Product::listAllByCategoryId($category_id,
+            'id, name, category_id, price, featured_price, image_small, short_description')->all();
 
-        //die($query->createCommand()->getRawSql());
+        $productArr = [];
+        foreach($products as $product){
+            $productArr[] = $product->toArray();
+        }
 
-        $dataProvider = new ActiveDataProvider(['query' => $query]);
-        return $this->jsonSuccess($dataProvider->toArray());
+        return $this->jsonSuccess(['products'=>$productArr]);
     }
 
     /**

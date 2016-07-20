@@ -14,15 +14,17 @@ class CategoryController extends ETRestController
     public function actionListWithProduct()
     {
 //        $query = ProductCategory::findAll()->where()->with(['products']);
-        $query = ProductCategory::find()
+        $categories = ProductCategory::find()
             ->where('status=:status and id!=:id', [':status'=>ProductCategory::STATUS_ACTIVE, ':id'=>ProductCategory::ROOT_LEVEL_ID])
             ->with(['products'])
             ->all();
-        $categories = [];
-        foreach($query as $category){
-            $categories[] = $category->toArray([], ['products']);
+        $categoryArr = [];
+        foreach($categories as $category){
+            $categoryArr[] = $category->toArray([], ['products']);
+//            $categoryArr[] = $category->toArray([]);
+//            $categoryArr[] = $category->attributes;
         }
 
-        return $this->jsonSuccess($categories);
+        return $this->jsonSuccess(['categories'=>$categoryArr]);
     }
 }
