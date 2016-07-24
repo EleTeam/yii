@@ -32,7 +32,7 @@ class CartController extends ETRestController
 
     /**
      * 添加产品到购物车，如果app_cart_cookie_id为空则生成唯一的它
-     * attributes 的格式 itemId_itemValueId, 如["3_15","2_10",...]
+     * attributes 的格式是json字符串 itemId_itemValueId, 如["3_15","2_10",...]
      */
     public function actionAdd($product_id=0, $count=1, $attributes='', $app_cart_cookie_id='')
     {
@@ -69,6 +69,11 @@ class CartController extends ETRestController
     protected function attributesToKeyValues($attributes)
     {
         $attrs = [];
+        $attrStrs = json_decode($attributes);
+        foreach($attrStrs as $attrStr){
+            $parts = explode('_', $attrStr);
+            $attrs[$parts[0]] = $parts[1];
+        }
         return $attrs;
     }
 }

@@ -11,8 +11,9 @@ use Yii;
  * @property integer $item_id 来自CartItem::$id
  * @property integer $attr_item_id 来自ProductAttrItem::$id
  * @property integer $attr_item_value_id 来自ProductAttrItemValue::$id
- * @property string $attr_idstring 格式 {$attr_item_id}_{$attr_item_value_id}, 如 12_23
  * @property integer $status
+ * @property integer $created_at
+ * @property integer $updated_at
  *
  * @property ProductAttrItem $attrItem
  * @property ProductAttrItemValue $attrItemValue
@@ -34,8 +35,7 @@ class CartItemAttr extends ETActiveRecord
     public function rules()
     {
         return [
-            [['item_id', 'attr_item_id', 'attr_item_value_id', 'status'], 'integer'],
-            [['attr_idstring'], 'string', 'max' => 255],
+            [['item_id', 'attr_item_id', 'attr_item_value_id', 'status', 'created_at', 'updated_at'], 'integer'],
             [['attr_item_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProductAttrItem::className(), 'targetAttribute' => ['attr_item_id' => 'id']],
             [['attr_item_value_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProductAttrItemValue::className(), 'targetAttribute' => ['attr_item_value_id' => 'id']],
             [['item_id'], 'exist', 'skipOnError' => true, 'targetClass' => CartItem::className(), 'targetAttribute' => ['item_id' => 'id']],
@@ -54,7 +54,6 @@ class CartItemAttr extends ETActiveRecord
             'item_id' => Yii::t('app', 'Item ID'),
             'attr_item_id' => Yii::t('app', 'Attr Item ID'),
             'attr_item_value_id' => Yii::t('app', 'Attr Item Value ID'),
-            'attr_idstring' => Yii::t('app', 'Attr Idstring'),
             'status' => Yii::t('app', 'Status'),
         ];
     }

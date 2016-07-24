@@ -107,7 +107,7 @@ class CartItem extends ETActiveRecord
      * @param $attrs 的格式 [$item_id=>$value_id, 1=>2, ...]
      * @return CartItem|null
      */
-    public static function findOneByCartIdProductIdAttrs($cart_id, $product_id, array $attrs)
+    public static function findOneByCartIdProductIdAttrs($cart_id, $product_id, $attrs)
     {
         $cartItems = static::find()->where(['cart_id'=>$cart_id, 'product_id'=>$product_id])->all();
 

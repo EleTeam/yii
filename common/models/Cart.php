@@ -127,6 +127,32 @@ class Cart extends ETActiveRecord
                 $cartItem->count = $cartItem->count + $count;
                 $cartItem->is_selected = CartItem::YES;
                 $cartItem->save();
+            }else{ //对应属性的产品不在购物车里
+                //添加购物车项
+                $cartItemNew = new CartItem();
+                $itemData = [
+                    'app_cart_cookie_id' => $cart->app_cart_cookie_id,
+                    'cart_id' => $cart->id,
+                    'product_id' => $product_id,
+                    'count' => $count,
+                ];
+                if($cartItemNew->load($itemData, '') && $cartItemNew->save()){
+                }else{
+                    throw new DbException($cartItemNew->errorsToString());
+                }
+                //添加购物车项的属性
+                foreach($attrs as $attr_item_id => $attr_item_value_id) {
+                    $itemAttr = new CartItemAttr();
+                    $itemAttrData = [
+                        'item_id' => $cartItemNew->id,
+                        'attr_item_id' => $attr_item_id,
+                        'attr_item_value_id' => $attr_item_value_id,
+                    ];
+                    if ($itemAttr->load($itemAttrData, '') && $itemAttr->save()) {
+                    } else {
+                        throw new DbException($itemAttr->errorsToString());
+                    }
+                }
             }
         }else{ //购物车不存在
             //添加购物车

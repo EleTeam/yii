@@ -20,7 +20,7 @@ class ETActiveRecord extends ActiveRecord
     const YES = 1;
 
     /**
-     * 自动设置模型字段 created_at, updated_at
+     * 自动设置模型字段, 每个表必须存在这些字段: created_at, updated_at
      * @inheritdoc
      */
     public function behaviors()
