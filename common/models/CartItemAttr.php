@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use common\components\ETActiveRecord;
 
 /**
  * This is the model class for table "cart_item_attr".

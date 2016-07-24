@@ -2,8 +2,8 @@
 namespace common\models;
 
 use Yii;
-use yii\behaviors\TimestampBehavior;
 use yii\web\IdentityInterface;
+use common\components\ETActiveRecord;
 
 /**
  * User model

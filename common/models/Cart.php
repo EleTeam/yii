@@ -4,6 +4,7 @@ namespace common\models;
 
 use Yii;
 use yii\db\Exception as DbException;
+use common\components\ETActiveRecord;
 
 /**
  * This is the model class for table "cart".
@@ -182,5 +183,16 @@ class Cart extends ETActiveRecord
         return $cart;
 	}
 
-
+    /**
+     * 购物车的个数
+     */
+    public function countCartNum($cart_id, $is_selected=1, $is_ordered=0)
+    {
+        $cart_num = 0;
+        $items = CartItem::find()->where(['cart_id'=>$cart_id, 'is_selected'=>$is_selected, 'is_ordered'=>$is_ordered])->all();
+        foreach($items as $item){
+            $cart_num += $item->count;
+        }
+        return $cart_num;
+    }
 }

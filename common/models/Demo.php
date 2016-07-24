@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use common\components\ETActiveRecord;
 
 /**
  * This is the model class for table "demo".
@@ -11,7 +12,7 @@ use Yii;
  * @property string $name
  * @property integer $type
  */
-class Demo extends \common\models\ETActiveRecord
+class Demo extends ETActiveRecord
 {
     /**
      * @inheritdoc
