@@ -8,10 +8,10 @@ use Yii;
  * This is the model class for table "cart_item_attr".
  *
  * @property integer $id
- * @property integer $item_id
- * @property integer $attr_item_id
- * @property integer $attr_item_value_id
- * @property string $attr_idstring
+ * @property integer $item_id 来自CartItem::$id
+ * @property integer $attr_item_id 来自ProductAttrItem::$id
+ * @property integer $attr_item_value_id 来自ProductAttrItemValue::$id
+ * @property string $attr_idstring 格式 {$attr_item_id}_{$attr_item_value_id}, 如 12_23
  * @property integer $status
  *
  * @property ProductAttrItem $attrItem
@@ -39,6 +39,8 @@ class CartItemAttr extends ETActiveRecord
             [['attr_item_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProductAttrItem::className(), 'targetAttribute' => ['attr_item_id' => 'id']],
             [['attr_item_value_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProductAttrItemValue::className(), 'targetAttribute' => ['attr_item_value_id' => 'id']],
             [['item_id'], 'exist', 'skipOnError' => true, 'targetClass' => CartItem::className(), 'targetAttribute' => ['item_id' => 'id']],
+            ['status', 'default', 'value' => self::STATUS_ACTIVE],
+            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
         ];
     }
 

@@ -13,30 +13,34 @@ use yii\validators\Validator;
 
 class UserController extends ETRestController
 {
-    /**
-     * 行为: 登录认证
-     * @return array
-     */
-    public function behaviors()
-    {
-        return ArrayHelper::merge(parent::behaviors(), [
-            'authenticator' => [
-                #这个地方使用`ComopositeAuth` 混合认证
-                'class' => CompositeAuth::className(),
-                #`authMethods` 中的每一个元素都应该是 一种 认证方式的类或者一个 配置数组
-                'authMethods' => [
-                    //HttpBasicAuth::className(),
-                    //HttpBearerAuth::className(),
-                    QueryParamAuth::className(), //url as: http://api.eleteam.com/v1/users?access-token=123
-                ]
-            ]
-        ]);
-    }
+//    /**
+//     * 行为: 登录认证
+//     * @return array
+//     */
+////    public function behaviors()
+////    {
+////        return ArrayHelper::merge(parent::behaviors(), [
+////            'authenticator' => [
+////                #这个地方使用`ComopositeAuth` 混合认证
+////                'class' => CompositeAuth::className(),
+////                #`authMethods` 中的每一个元素都应该是 一种 认证方式的类或者一个 配置数组
+////                'authMethods' => [
+////                    //HttpBasicAuth::className(),
+////                    //HttpBearerAuth::className(),
+////                    QueryParamAuth::className(), //url as: http://api.eleteam.com/v1/users?access-token=123
+////                ]
+////            ]
+////        ]);
+////    }
 
     public function actionView($id)
     {
         $user = User::findOne($id);
-        return $this->jsonSuccess(['user'=>$user->toArray()]);
+        $data = [
+            'user' => $user->toArray(),
+            'user_id' => \Yii::$app->user->id,
+        ];
+        return $this->jsonSuccess($data);
     }
 
     public function registerStep1($mobile)

@@ -9,6 +9,7 @@
 
 namespace common\components;
 
+use common\models\User;
 use Yii;
 use yii\rest\Controller;
 
@@ -55,5 +56,11 @@ class ETRestController extends Controller
     {
         $message = $message ? $message : '调用失败';
         return $this->jsonEncode(false, $data, $message, $code, $share);
+    }
+
+    protected function isLoggedIn()
+    {
+        $user = User::findIdentityByAccessToken(@$_REQUEST['access_token']);
+        return !!$user;
     }
 }
