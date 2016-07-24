@@ -31,12 +31,48 @@ class CartController extends ETRestController
 //    }
 
     /**
-     * 添加产品到购物车，如果app_cart_cookie_id为空则生成唯一的它
-     * attributes 的格式是json字符串 itemId_itemValueId, 如["3_15","2_10",...]
+     * 购物车首页
      */
-    public function actionAdd($product_id=0, $count=1, $attributes='', $app_cart_cookie_id='')
+    public function actionIndex($app_cart_cookie_id='')
     {
-        $app_cart_cookie_id = $app_cart_cookie_id ? $app_cart_cookie_id : Cart::genAppCartCookieId();
+        $cartItemsArr = [];
+        $cart_num = 0;
+        $total_price = 0;
+
+        if($this->isLoggedIn()){
+            $cart = Cart::findOneByUserId($this->getUserId());
+        }else{
+            $cart = Cart::findOneByAppCartCookieId($app_cart_cookie_id);
+        }
+        if($cart) {
+            $itemsSummary = Cart::findItemsSummary($cart->id);
+            foreach($itemsSummary['cartItems'] as $cartItem){
+                $cartItemsArr[] = $cartItem->toArray([], ['product']);
+            }
+            $total_price = $itemsSummary['total_price'];
+            $cart_num = $itemsSummary['cart_num'];
+        }
+
+        $data = [
+            'cartItems' => $cartItemsArr,
+            'cart_num' => $cart_num,
+            'total_price' => $total_price,
+            'is_logged_in' => $this->isLoggedIn(),
+        ];
+        return $this->jsonSuccess($data);
+    }
+
+    /**
+     * 添加产品到购物车，如果app_cart_cookie_id为空则生成唯一的它
+     * attributes 的格式是 itemId_itemValueId, 如 1_2,2_10,3_15
+     */
+    public function actionAdd()
+    {
+        $request = Yii::$app->request;
+        $product_id = $_REQUEST['product_id'];
+        $count = $request->get('count');
+        $attributes = $_REQUEST['attributes'];
+        $app_cart_cookie_id = $request->get('app_cart_cookie_id') ? $request->get('app_cart_cookie_id') : Cart::genAppCartCookieId();
         $attrs = $this->attributesToKeyValues($attributes);
         $cart_num = 0;
 
@@ -53,26 +89,21 @@ class CartController extends ETRestController
 
         $data = [
             'is_logged_in' => $this->isLoggedIn(),
-            'app_cart_cookie_id' => $cart->app_cart_cookie_id,
+            'app_cart_cookie_id' => $app_cart_cookie_id,
             'cart_num' => $cart_num,
         ];
         return $this->jsonSuccess($data);
     }
 
-    public function actionView()
-    {
-        echo '1';
-    }
-
     /**
      * 格式化的属性和属性值转换为数组
-     * @param $attributes
+     * @param $attributes 的格式是 itemId_itemValueId, 如 1_2,2_10,3_15
      * @return array 的格式 [$item_id=>$value_id, 1=>2, ...]
      */
     protected function attributesToKeyValues($attributes)
     {
         $attrs = [];
-        $attrStrs = json_decode($attributes);
+        $attrStrs = explode(',', $attributes);
         foreach($attrStrs as $attrStr){
             $parts = explode('_', $attrStr);
             $attrs[$parts[0]] = $parts[1];

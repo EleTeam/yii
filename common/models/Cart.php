@@ -94,6 +94,18 @@ class Cart extends ETActiveRecord
     }
 
     /**
+     * 查找购物车, 通过$user_id
+     * @param $user_id
+     * @return null|static
+     */
+    public static function findOneByUserId($user_id)
+    {
+        if(!$user_id)
+            return null;
+        return static::findOne(['user_id'=>$user_id]);
+    }
+
+    /**
      * 查找购物车, 通过$app_cart_cookie_id
      * @param $app_cart_cookie_id
      * @return null|static
@@ -184,9 +196,9 @@ class Cart extends ETActiveRecord
 	}
 
     /**
-     * 购物车的个数
+     * 购物车项的个数
      */
-    public function countCartNum($cart_id, $is_selected=1, $is_ordered=0)
+    public static function countCartNum($cart_id, $is_selected=1, $is_ordered=0)
     {
         $cart_num = 0;
         $items = CartItem::find()->where(['cart_id'=>$cart_id, 'is_selected'=>$is_selected, 'is_ordered'=>$is_ordered])->all();
@@ -194,5 +206,32 @@ class Cart extends ETActiveRecord
             $cart_num += $item->count;
         }
         return $cart_num;
+    }
+
+    /**
+     * 查找购物车的项
+     * @param $cart_id
+     * @param int $is_selected
+     * @param int $is_ordered
+     */
+    public static function findItemsSummary($cart_id, $is_ordered=0)
+    {
+        $cart_num = 0;
+        $total_price = 0;
+        $items = CartItem::find()->with(['product'])
+            ->where(['cart_id'=>$cart_id, 'is_ordered'=>$is_ordered])
+            ->all();
+
+        foreach($items as $item){
+            if($item->is_selected) {
+                $cart_num += $item->count;
+                $total_price += $item->product->showCurrentPrice() * $item->count;
+            }
+        }
+        return [
+            'cart_num' => $cart_num,
+            'total_price' => $total_price,
+            'cartItems' => $items,
+        ];
     }
 }

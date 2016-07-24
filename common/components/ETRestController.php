@@ -11,6 +11,7 @@ namespace common\components;
 
 use common\models\User;
 use Yii;
+use yii\helpers\Json;
 use yii\rest\Controller;
 
 class ETRestController extends Controller
@@ -42,7 +43,8 @@ class ETRestController extends Controller
             'share'      => $share,
         ];
 
-        echo json_encode($result, JSON_UNESCAPED_UNICODE);
+        //echo json_encode($result, JSON_UNESCAPED_UNICODE);
+        echo Json::encode($result);
         exit;
     }
 
@@ -62,5 +64,11 @@ class ETRestController extends Controller
     {
         $user = User::findIdentityByAccessToken(@$_REQUEST['access_token']);
         return !!$user;
+    }
+
+    protected function getUserId()
+    {
+        $user = User::findIdentityByAccessToken(@$_REQUEST['access_token']);
+        return $user ? $user->id : null;
     }
 }

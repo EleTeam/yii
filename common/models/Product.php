@@ -144,6 +144,8 @@ class Product extends ETActiveRecord
             $value = Yii::getAlias('@imghost') . $value;
         if($name == 'image_small' && $value)
             $value = Yii::getAlias('@imghost') . $value;
+        if($name == 'image' && $value)
+            $value = Yii::getAlias('@imghost') . $value;
 
         return $value;
     }
@@ -179,5 +181,14 @@ class Product extends ETActiveRecord
             ->where('category_id = :category_id and status = :status',
                 [':category_id' => $category_id, ':status' => $status])
             ->orderBy($orderBy);
+    }
+
+    public function showCurrentPrice()
+    {
+        if($this->featured_price){
+            return $this->featured_price;
+        }else{
+            return $this->price;
+        }
     }
 }
