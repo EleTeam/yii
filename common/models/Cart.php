@@ -127,7 +127,7 @@ class Cart extends ETActiveRecord
      * @return Cart|null
      * @throws DbException
      */
-    public static function addItem($user_id, $app_cart_cookie_id, $product_id, $count, $attrs)
+    public static function addItem($user_id, $app_cart_cookie_id, $product_id, $count, array $attrs)
     {
         $product = Product::findOne($product_id);
         if(!$product){
@@ -154,7 +154,7 @@ class Cart extends ETActiveRecord
                     throw new DbException($cartItemNew->errorsToString());
                 }
                 //添加购物车项的属性
-                foreach(@$attrs as $attr_item_id => $attr_item_value_id) {
+                foreach($attrs as $attr_item_id => $attr_item_value_id) {
                     $itemAttr = new CartItemAttr();
                     $itemAttrData = [
                         'item_id' => $cartItemNew->id,
@@ -201,7 +201,8 @@ class Cart extends ETActiveRecord
     public static function sumCartNum($cart_id, $is_selected=1, $is_ordered=0)
     {
         $cart_num = 0;
-        $items = CartItem::find()->where(['cart_id'=>$cart_id, 'is_selected'=>$is_selected, 'is_ordered'=>$is_ordered])->all();
+        $where = ['cart_id'=>$cart_id, 'is_selected'=>$is_selected, 'is_ordered'=>$is_ordered, 'status'=>self::STATUS_ACTIVE];
+        $items = CartItem::find()->where($where)->all();
         foreach($items as $item){
             $cart_num += $item->count;
         }
@@ -217,7 +218,7 @@ class Cart extends ETActiveRecord
     public static function findItems($cart_id, $is_ordered=0)
     {
         return CartItem::find()->with(['product'])
-            ->where(['cart_id'=>$cart_id, 'is_ordered'=>$is_ordered])
+            ->where(['cart_id'=>$cart_id, 'is_ordered'=>$is_ordered, 'status'=>self::STATUS_ACTIVE])
             ->all();
     }
 

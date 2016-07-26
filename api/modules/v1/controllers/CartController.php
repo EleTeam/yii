@@ -52,6 +52,7 @@ class CartController extends ETRestController
 
         $data = [
             'cartItems' => $cartItemsArr,
+            'couponUsers' => null,
             'cart_num' => $cart_num,
             'total_price' => $total_price,
             'is_logged_in' => $this->isLoggedIn(),
@@ -94,7 +95,7 @@ class CartController extends ETRestController
     protected function attributesToKeyValues($attributes)
     {
         if(empty($attributes))
-            return null;
+            return [];
 
         $attrs = [];
         $attrStrs = explode(',', $attributes);
@@ -102,6 +103,7 @@ class CartController extends ETRestController
             $parts = explode('_', $attrStr);
             $attrs[$parts[0]] = $parts[1];
         }
+
         return $attrs;
     }
 }
