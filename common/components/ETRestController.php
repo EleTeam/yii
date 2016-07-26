@@ -9,6 +9,7 @@
 
 namespace common\components;
 
+use common\models\Cart;
 use common\models\User;
 use Yii;
 use yii\helpers\Json;
@@ -70,5 +71,26 @@ class ETRestController extends Controller
     {
         $user = User::findIdentityByAccessToken(@$_REQUEST['access_token']);
         return $user ? $user->id : null;
+    }
+
+    protected function getUser()
+    {
+        return User::findIdentityByAccessToken(@$_REQUEST['access_token']);
+    }
+
+    protected function getAppCartCookieId()
+    {
+        return $this->getParam('app_cart_cookie_id') ? $this->getParam('app_cart_cookie_id') : Cart::genAppCartCookieId();
+    }
+
+    /**
+     * 获取 $_REQUEST[$name], 包含get,post方式传过来的值
+     * @param $name
+     * @param null $defaultValue
+     * @return mixed
+     */
+    protected function getParam($name, $defaultValue=null)
+    {
+        return isset($_REQUEST[$name]) ? $_REQUEST[$name] : $defaultValue;
     }
 }

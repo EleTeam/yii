@@ -119,6 +119,7 @@ class Cart extends ETActiveRecord
 
     /**
      * 添加产品到购物车
+     * @param $user_id
      * @param $app_cart_cookie_id
      * @param $product_id
      * @param $count
@@ -126,14 +127,14 @@ class Cart extends ETActiveRecord
      * @return Cart|null
      * @throws DbException
      */
-    public static function addItemByAppCartCookieId($app_cart_cookie_id, $product_id, $count, $attrs)
+    public static function addItem($user_id, $app_cart_cookie_id, $product_id, $count, $attrs)
     {
         $product = Product::findOne($product_id);
         if(!$product){
             throw new DbException('商品不存在');
         }
 
-        $cart = Cart::findOneByAppCartCookieId($app_cart_cookie_id);
+        $cart = Cart::myCart($user_id, $app_cart_cookie_id);
         if($cart){ //购物车存在
             $cartItem = CartItem::findOneByCartIdProductIdAttrs($cart->id, $product_id, $attrs);
             if($cartItem){ //对应属性的产品在购物车里
@@ -144,7 +145,6 @@ class Cart extends ETActiveRecord
                 //添加购物车项
                 $cartItemNew = new CartItem();
                 $itemData = [
-                    'app_cart_cookie_id' => $cart->app_cart_cookie_id,
                     'cart_id' => $cart->id,
                     'product_id' => $product_id,
                     'count' => $count,
@@ -154,7 +154,7 @@ class Cart extends ETActiveRecord
                     throw new DbException($cartItemNew->errorsToString());
                 }
                 //添加购物车项的属性
-                foreach($attrs as $attr_item_id => $attr_item_value_id) {
+                foreach(@$attrs as $attr_item_id => $attr_item_value_id) {
                     $itemAttr = new CartItemAttr();
                     $itemAttrData = [
                         'item_id' => $cartItemNew->id,
@@ -171,13 +171,13 @@ class Cart extends ETActiveRecord
             //添加购物车
             $cart = new Cart();
             $cartData = [
-                'app_cart_cookie_id' => self::genAppCartCookieId()
+                'user_id' => $user_id,
+                'app_cart_cookie_id' => $app_cart_cookie_id,
             ];
             if($cart->load($cartData, '') && $cart->save()){
                 //添加购物车项
                 $item = new CartItem();
                 $itemData = [
-                    'app_cart_cookie_id' => $cart->app_cart_cookie_id,
                     'cart_id' => $cart->id,
                     'product_id' => $product_id,
                     'count' => $count,
@@ -198,7 +198,7 @@ class Cart extends ETActiveRecord
     /**
      * 购物车项的个数
      */
-    public static function countCartNum($cart_id, $is_selected=1, $is_ordered=0)
+    public static function sumCartNum($cart_id, $is_selected=1, $is_ordered=0)
     {
         $cart_num = 0;
         $items = CartItem::find()->where(['cart_id'=>$cart_id, 'is_selected'=>$is_selected, 'is_ordered'=>$is_ordered])->all();
@@ -211,27 +211,73 @@ class Cart extends ETActiveRecord
     /**
      * 查找购物车的项
      * @param $cart_id
-     * @param int $is_selected
      * @param int $is_ordered
+     * @return array|null
      */
-    public static function findItemsSummary($cart_id, $is_ordered=0)
+    public static function findItems($cart_id, $is_ordered=0)
     {
-        $cart_num = 0;
-        $total_price = 0;
-        $items = CartItem::find()->with(['product'])
+        return CartItem::find()->with(['product'])
             ->where(['cart_id'=>$cart_id, 'is_ordered'=>$is_ordered])
             ->all();
+    }
 
+    /**
+     * 计算购物车的项的总个数
+     * @param $items
+     * @return float
+     */
+    public static function sumCartNumByItems($items)
+    {
+        $cart_num = 0;
         foreach($items as $item){
-            if($item->is_selected) {
-                $cart_num += $item->count;
-                $total_price += $item->product->showCurrentPrice() * $item->count;
+            $cart_num += $item->count;
+        }
+        return $cart_num;
+    }
+
+    /**
+     * 计算购物车的项的总额
+     * @param $items
+     * @return float
+     */
+    public static function sumTotalPriceByItems($items)
+    {
+        $total_price = 0;
+        foreach($items as $item){
+            $total_price += $item->product->showCurrentPrice() * $item->count;
+        }
+        return $total_price;
+    }
+
+
+
+    /**
+     * 获取或创建我的购物车, 获取优先顺序:
+     *  1.获取登录用户的购物车, 如果没有则生成
+     *  2.获取app_cart_cookie_id关联的非登录用户的购物车, 如果没有则生成
+     */
+    public static function myCart($user_id, $app_cart_cookie_id)
+    {
+        if($user_id){
+            $cart = Cart::findOne(['user_id'=>$user_id]);
+            if(!$cart){
+                $cart = new Cart();
+                $cartData = [
+                    'user_id' => $user_id,
+                ];
+                $cart->load($cartData) && $cart->save();
+            }
+        }else{
+            $cart = Cart::findOne(['app_cart_cookie_id'=>$app_cart_cookie_id]);
+            if(!$cart){
+                $cart = new Cart();
+                $cartData = [
+                    'app_cart_cookie_id' => $app_cart_cookie_id,
+                ];
+                $cart->load($cartData) && $cart->save();
             }
         }
-        return [
-            'cart_num' => $cart_num,
-            'total_price' => $total_price,
-            'cartItems' => $items,
-        ];
+
+        return $cart;
     }
 }

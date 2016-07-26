@@ -33,24 +33,21 @@ class CartController extends ETRestController
     /**
      * 购物车首页
      */
-    public function actionIndex($app_cart_cookie_id='')
+    public function actionIndex()
     {
         $cartItemsArr = [];
         $cart_num = 0;
         $total_price = 0;
+        $app_cart_cookie_id = $this->getAppCartCookieId();
 
-        if($this->isLoggedIn()){
-            $cart = Cart::findOneByUserId($this->getUserId());
-        }else{
-            $cart = Cart::findOneByAppCartCookieId($app_cart_cookie_id);
-        }
+        $cart = Cart::myCart($this->getUserId(), $app_cart_cookie_id);
         if($cart) {
-            $itemsSummary = Cart::findItemsSummary($cart->id);
-            foreach($itemsSummary['cartItems'] as $cartItem){
+            $items = Cart::findItems($cart->id);
+            foreach($items as $cartItem){
                 $cartItemsArr[] = $cartItem->toArray([], ['product']);
             }
-            $total_price = $itemsSummary['total_price'];
-            $cart_num = $itemsSummary['cart_num'];
+            $total_price = Cart::sumTotalPriceByItems($items);
+            $cart_num = Cart::sumCartNumByItems($items);
         }
 
         $data = [
@@ -58,6 +55,7 @@ class CartController extends ETRestController
             'cart_num' => $cart_num,
             'total_price' => $total_price,
             'is_logged_in' => $this->isLoggedIn(),
+            'app_cart_cookie_id' => $app_cart_cookie_id,
         ];
         return $this->jsonSuccess($data);
     }
@@ -68,28 +66,21 @@ class CartController extends ETRestController
      */
     public function actionAdd()
     {
-        $request = Yii::$app->request;
-        $product_id = $_REQUEST['product_id'];
-        $count = $request->get('count');
-        $attributes = $_REQUEST['attributes'];
-        $app_cart_cookie_id = $request->get('app_cart_cookie_id') ? $request->get('app_cart_cookie_id') : Cart::genAppCartCookieId();
+        $product_id = $this->getParam('product_id');
+        $count = $this->getParam('count');
+        $attributes = $this->getParam('attributes');
         $attrs = $this->attributesToKeyValues($attributes);
-        $cart_num = 0;
 
         try {
-            if ($this->isLoggedIn()) {
-
-            } else {
-                $cart = Cart::addItemByAppCartCookieId($app_cart_cookie_id, $product_id, $count, $attrs);
-                $cart_num = $cart->countCartNum($cart->id);
-            }
+            $cart = Cart::addItem($this->getUserId(), $this->getAppCartCookieId(), $product_id, $count, $attrs);
+            $cart_num = $cart->sumCartNum($cart->id);
         } catch (DbException $e) {
             return $this->jsonFail([], $e->getMessage());
         }
 
         $data = [
             'is_logged_in' => $this->isLoggedIn(),
-            'app_cart_cookie_id' => $app_cart_cookie_id,
+            'app_cart_cookie_id' => $cart->app_cart_cookie_id,
             'cart_num' => $cart_num,
         ];
         return $this->jsonSuccess($data);
@@ -102,6 +93,9 @@ class CartController extends ETRestController
      */
     protected function attributesToKeyValues($attributes)
     {
+        if(empty($attributes))
+            return null;
+
         $attrs = [];
         $attrStrs = explode(',', $attributes);
         foreach($attrStrs as $attrStr){

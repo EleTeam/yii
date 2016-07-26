@@ -3,6 +3,7 @@
 namespace api\modules\v1\controllers;
 
 use common\components\ETRestController;
+use common\models\Cart;
 use common\models\ProductAttrItem;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -24,10 +25,12 @@ class ProductController extends ETRestController
             }
         }
 
+        $cart = Cart::myCart($this->getUserId(), $this->getAppCartCookieId());
+
         //购物车项数量
         $data = [
             'product' => $productArr,
-            'cart_item_num' => 2,
+            'cart_num' => Cart::sumCartNum($cart->id),
             'product_collected' => '1',
         ];
         return $this->jsonSuccess($data);
