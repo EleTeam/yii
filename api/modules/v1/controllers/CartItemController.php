@@ -14,16 +14,8 @@ class CartItemController extends ETRestController
     public function actionDelete()
     {
         $id = $this->getParam('id');
-
-        $item = CartItem::findOne($id);
-        $item->status = CartItem::STATUS_DELETED;
-        $item->save();
-        $cart = Cart::myCart($this->getUserId(), $this->getAppCartCookieId());
-
-        $data = [
-            'app_cart_cookie_id' => $cart->app_cart_cookie_id,
-            'cart_num' => Cart::sumCartNum($cart->id),
-        ];
-        return $this->jsonSuccess($data);
+        $app_cart_cookie_id = $this->getAppCartCookieId();
+        CartItem::deleteByMore($id, $this->getUserId(), $app_cart_cookie_id);
+        return $this->jsonSuccess();
     }
 }

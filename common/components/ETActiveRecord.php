@@ -46,4 +46,21 @@ class ETActiveRecord extends ActiveRecord
         }
         return implode('; ', $errors);
     }
+
+    /**
+     * 软删除
+     * @param $id
+     * @param $user_id
+     * @return int 被删除的行数
+     */
+    public static function deleteBy($id, $user_id)
+    {
+        $rows = 0;
+        if($user_id){
+            $rows = static::updateAll(['status'=>static::STATUS_DELETED],
+                'id=:id and user_id=:user_id',
+                ['id'=>$id, 'user_id'=>$user_id]);
+        }
+        return $rows;
+    }
 }

@@ -11,7 +11,11 @@ use common\components\ETActiveRecord;
  * @property integer $id
  * @property integer $cart_id
  * @property integer $product_id
+ *
+ * 以下两个字段与Cart::$user_id/Cart::$app_cart_cookie_id共同存在是需要的, 为的是方便获取和更高效更新CartItem对象
  * @property integer $user_id
+ * @property string $app_cart_cookie_id
+ *
  * @property integer $created_at
  * @property integer $created_by
  * @property integer $status
@@ -21,7 +25,6 @@ use common\components\ETActiveRecord;
  * @property integer $is_ordered
  * @property integer $is_selected
  * @property integer $cookie_id
- * @property string $app_cart_cookie_id
  *
  * @property Cart $cart
  * @property Product $product
@@ -130,5 +133,25 @@ class CartItem extends ETActiveRecord
         }
 
         return null;
+    }
+
+    /**
+     * 软删除
+     * @param $id
+     * @param $user_id
+     * @param $app_cart_cookie_id
+     * @return int 被删除的行数
+     */
+    public static function deleteByMore($id, $user_id, $app_cart_cookie_id)
+    {
+        $rows = 0;
+        if($user_id){
+            $rows = static::deleteBy($id, $user_id);
+        }elseif($app_cart_cookie_id){
+            $rows = static::updateAll(['status'=>static::STATUS_DELETED],
+                'id=:id and app_cart_cookie_id=:app_cart_cookie_id',
+                ['id'=>$id, 'app_cart_cookie_id'=>$app_cart_cookie_id]);
+        }
+        return $rows;
     }
 }

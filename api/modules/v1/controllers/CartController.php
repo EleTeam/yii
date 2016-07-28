@@ -71,9 +71,10 @@ class CartController extends ETRestController
         $count = $this->getParam('count');
         $attributes = $this->getParam('attributes');
         $attrs = $this->attributesToKeyValues($attributes);
+        $app_cart_cookie_id = $this->getAppCartCookieId();
 
         try {
-            $cart = Cart::addItem($this->getUserId(), $this->getAppCartCookieId(), $product_id, $count, $attrs);
+            $cart = Cart::addItem($this->getUserId(), $app_cart_cookie_id, $product_id, $count, $attrs);
             $cart_num = $cart->sumCartNum($cart->id);
         } catch (DbException $e) {
             return $this->jsonFail([], $e->getMessage());
@@ -81,7 +82,7 @@ class CartController extends ETRestController
 
         $data = [
             'is_logged_in' => $this->isLoggedIn(),
-            'app_cart_cookie_id' => $cart->app_cart_cookie_id,
+            'app_cart_cookie_id' => $app_cart_cookie_id,
             'cart_num' => $cart_num,
         ];
         return $this->jsonSuccess($data);

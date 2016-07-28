@@ -148,6 +148,8 @@ class Cart extends ETActiveRecord
                     'cart_id' => $cart->id,
                     'product_id' => $product_id,
                     'count' => $count,
+                    'user_id' => $user_id,
+                    'app_cart_cookie_id' => $app_cart_cookie_id,
                 ];
                 if($cartItemNew->load($itemData, '') && $cartItemNew->save()){
                 }else{
@@ -160,6 +162,8 @@ class Cart extends ETActiveRecord
                         'item_id' => $cartItemNew->id,
                         'attr_item_id' => $attr_item_id,
                         'attr_item_value_id' => $attr_item_value_id,
+                        'user_id' => $user_id,
+                        'app_cart_cookie_id' => $app_cart_cookie_id,
                     ];
                     if ($itemAttr->load($itemAttrData, '') && $itemAttr->save()) {
                     } else {
@@ -250,12 +254,13 @@ class Cart extends ETActiveRecord
         return $total_price;
     }
 
-
-
     /**
      * 获取或创建我的购物车, 获取优先顺序:
      *  1.获取登录用户的购物车, 如果没有则生成
      *  2.获取app_cart_cookie_id关联的非登录用户的购物车, 如果没有则生成
+     * @param $user_id
+     * @param $app_cart_cookie_id
+     * @return Cart|null|static
      */
     public static function myCart($user_id, $app_cart_cookie_id)
     {
@@ -266,19 +271,34 @@ class Cart extends ETActiveRecord
                 $cartData = [
                     'user_id' => $user_id,
                 ];
-                $cart->load($cartData) && $cart->save();
+                $cart->load($cartData, '') && $cart->save();
             }
-        }else{
+            return $cart;
+        }elseif($app_cart_cookie_id){
             $cart = Cart::findOne(['app_cart_cookie_id'=>$app_cart_cookie_id]);
             if(!$cart){
                 $cart = new Cart();
                 $cartData = [
                     'app_cart_cookie_id' => $app_cart_cookie_id,
                 ];
-                $cart->load($cartData) && $cart->save();
+                $cart->load($cartData, '') && $cart->save();
             }
+            return $cart;
         }
 
-        return $cart;
+        return null;
+    }
+
+    /**
+     * 获取或创建我的购物车id
+     * @param $user_id
+     * @param $app_cart_cookie_id
+     * @return int|null
+     * @see static::myCart($user_id, $app_cart_cookie_id);
+     */
+    public static function myCartId($user_id, $app_cart_cookie_id)
+    {
+        $cart = static::myCart($user_id, $app_cart_cookie_id);
+        return $cart ? $cart->id : null;
     }
 }
