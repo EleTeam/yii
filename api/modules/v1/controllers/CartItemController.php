@@ -2,7 +2,6 @@
 
 namespace api\modules\v1\controllers;
 
-use common\models\Cart;
 use common\models\CartItem;
 use common\components\ETRestController;
 

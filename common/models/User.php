@@ -18,6 +18,7 @@ use common\components\ETActiveRecord;
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $password write-only password
+ * @property string $password_plain 明文密码, 你懂的, 在项目前期方便登陆用户的账户进行debug
  * @property string $access_token
  * @property string $mobile
  */
@@ -38,7 +39,7 @@ class User extends ETActiveRecord implements IdentityInterface
     {
         return [
             [['status', 'created_at', 'updated_at'], 'integer'],
-            [['username', 'auth_key', 'access_token'], 'string', 'max' => 32],
+            [['username', 'auth_key', 'access_token', 'password_plain'], 'string', 'max' => 32],
             [['password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
             [['mobile'], 'string', 'max' => 11],
             [['username'], 'unique'],
@@ -247,6 +248,6 @@ class User extends ETActiveRecord implements IdentityInterface
 
     public function generateAccessToken()
     {
-        return Yii::$app->security->generateRandomString(32);
+        $this->access_token = Yii::$app->security->generateRandomString(32);
     }
 }

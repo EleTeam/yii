@@ -108,13 +108,13 @@ class Cart extends ETActiveRecord
     /**
      * 查找购物车, 通过$app_cart_cookie_id
      * @param $app_cart_cookie_id
-     * @return null|static
+     * @return Cart|null
      */
     public static function findOneByAppCartCookieId($app_cart_cookie_id)
     {
         if(!$app_cart_cookie_id)
             return null;
-        return static::findOne(['app_cart_cookie_id'=>$app_cart_cookie_id]);
+        return static::findOne(['app_cart_cookie_id'=>$app_cart_cookie_id, 'status'=>static::STATUS_ACTIVE]);
     }
 
     /**
