@@ -3,10 +3,10 @@ return [
     'components' => [
         'db' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=127.0.0.1;dbname=yii',
-            'username' => 'root',
+            'dsn' => 'mysql:host=127.0.0.1;dbname=etshop',
+            'username' => 'etshop',
 //            'dsn' => 'mysql:host=120.24.54.172;dbname=yii',
-//            'username' => 'yii',
+//            'username' => 'etshop',
             'password' => '123456',
             'charset' => 'utf8',
             //'tablePrefix' => 'pre_',
