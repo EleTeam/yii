@@ -1,10 +1,12 @@
 <?php
 /**
- * @link http://www.eleteam.com/
- * @copyright Copyright (c) 2015 EleTeam
- * @license MIT License
- * @author 黄治华
+ * ETShop-for-PHP-Yii2
+ *
+ * @author Tony Wong
+ * @date 2015-05-18
  * @email 908601756@qq.com
+ * @copyright Copyright © 2015年 EleTeam
+ * @license The MIT License (MIT)
  */
 
 namespace common\components;

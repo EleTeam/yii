@@ -1,4 +1,13 @@
 <?php
+/**
+ * ETShop-for-PHP-Yii2
+ *
+ * @author Tony Wong
+ * @date 2015-06-22
+ * @email 908601756@qq.com
+ * @copyright Copyright © 2015年 EleTeam
+ * @license The MIT License (MIT)
+ */
 
 // NOTE: Make sure this file is not accessible when deployed to production
 if (!in_array(@$_SERVER['REMOTE_ADDR'], ['127.0.0.1', '::1'])) {

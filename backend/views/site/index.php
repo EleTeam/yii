@@ -1,3 +1,15 @@
+<?php
+/**
+ * ETShop-for-PHP-Yii2
+ *
+ * @author Tony Wong
+ * @date 2015-06-22
+ * @email 908601756@qq.com
+ * @copyright Copyright © 2015年 EleTeam
+ * @license The MIT License (MIT)
+ */
+
+?>
 <!-- Info boxes -->
 <div class="row">
     <div class="col-md-3 col-sm-6 col-xs-12">
